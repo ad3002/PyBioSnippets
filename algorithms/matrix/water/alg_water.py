@@ -33,7 +33,7 @@ def alg_fill_bottom(a):
     
     min_height = avaliable_heights[0] - 1
     
-    print "Heights: ", len(avaliable_heights)
+    # print "Heights: ", len(avaliable_heights)
     
     for H in avaliable_heights[:-1]:
      
@@ -327,28 +327,55 @@ if __name__ == '__main__':
     print "Simple case: ", t.timeit(number=1)
      
     
-#    gr = gen_grebenka(1000,1000)
-#    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
-#    print "Grebenka 1000x1000 case: ", t.timeit(number=1)
     
-    # тестим зависимость от количества высот
-#    for k in range(0,11):
-#        a = numpy.random.rand(100,100)
-#        
-#        N,M = a.shape
-#        
-#        for i in range(0,N):
-#            for j in range(0,M):
-#                a[i,j] = round(a[i,j], 1) 
-#        
-#        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
-#        print "Random 1000x1000, %s proc of zeros: " % (10*k), t.timeit(number=1)   
-#
-#    s = get_spiral()
-#    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
-#    print "Spiral case 1000x1000: ", t.timeit(number=1)
+    
+    def add_height(i, n):
+        if n == 2:
+            if i>0.5:
+                return 0
+            else:
+                return 1
+        if n == 3:
+            if i>0.6:
+                return 0
+            elif i>0.3:
+                return 1
+            else:
+                return 2
+        if n == 5:
+            if i>0.8:
+                return 0
+            elif i>0.6:
+                return 1
+            elif i>0.4:
+                return 2
+            elif i>0.2:
+                return 3
+            else:
+                return 4
+        if n == 10:
+            return round(i,1)
+        if n == 100:
+            return round(i,2)
+                
+    
+#    тестим зависимость от количества высот
+    for k in [2,3,5,10,100]:
+        a = numpy.random.rand(100,100)
+        N,M = a.shape
+        for i in range(0,N):
+            for j in range(0,M):
+                a[i,j] = add_height(a[i,j], k) 
+        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+        print "Random 100x100x%s: " % (k), t.timeit(number=1)   
 
+    gr = gen_grebenka(100,100)
+    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
+    print "Grebenka 100x100 case: ", t.timeit(number=1)
     
+    s = get_spiral()
+    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
+    print "Spiral case 1000x1000: ", t.timeit(number=1)
     
     # тестим зависимость от размера
     
