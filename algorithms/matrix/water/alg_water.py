@@ -6,6 +6,7 @@
 #@contact: ad3002@gmail.com 
  
 import numpy
+
  
 def alg_fill_bottom(a):
     '''
@@ -23,10 +24,6 @@ def alg_fill_bottom(a):
     for gi in range(1,N-1):
         for gj in range(1,M-1):
      
-            # numpy.rand выдает число в [0,1], добавим больше донышек
-            if a[gi,gj] < 0.2:
-                a[gi,gj] = 0
-            
             # нам интересны только донышки
             if a[gi,gj] > 0:
                 continue
@@ -167,29 +164,78 @@ def alg_fill_bottom(a):
             # print "="*10
     return global_value
     
+    
+def test(a):
+    return alg_fill_bottom(a)
+  
+    
 if __name__ == '__main__':
     
-    a = numpy.array([ [0,2,1,0,1,1,1],
-                      [2,0,5,0,1,0,1],
-                      [0,5,0,5,1,1,1],
-                      [0,1,5,0,1,0,1]
-                      ])
     
-    global_value = alg_fill_bottom(a)
-    print "="*10
-    print "Result: ", global_value
-     
-    a = numpy.random.rand(1000,1000)
-     
-    global_value = alg_fill_bottom(a)
-    print "="*10
-    print "Result: ", global_value
+    from timeit import Timer
     
-    a = numpy.zeros((1000,1000))
-     
-    global_value = alg_fill_bottom(a)
-    print "="*10
-    print "Result: ", global_value
- 
+    # тестим зависимость от количества нулевых элементов
+    for k in range(0,11):
+        a = numpy.random.rand(1000,1000)
+        
+        N,M = a.shape
+        
+        for i in range(0,N):
+            for j in range(0,M):
+                if a[i,j] < k*0.1:
+                    a[i,j] = 0 
+        
+        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+        print "Random 1000x1000, %s proc of zeros: " % (10*k), t.timeit(number=1)   
     
     
+    # тестим зависимость от размера
+    
+    
+#    a = numpy.array([ [0,2,1,0,1,1,1],
+#                      [2,0,5,0,1,0,1],
+#                      [0,5,0,5,1,1,1],
+#                      [0,1,5,0,1,0,1]
+#                      ])
+#    
+#    t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
+#    print "Simple case: ", t.timeit(number=1)
+#    
+#    
+#    b1 = numpy.random.rand(10,10)
+#    t = Timer("test(b1)", "from __main__ import test; from __main__ import b1")
+#    print "Random 10x10: ", t.timeit(number=1)
+#    
+#    b2 = numpy.random.rand(100,100)
+#    t = Timer("test(b2)", "from __main__ import test; from __main__ import b2")
+#    print "Random 100x100: ", t.timeit(number=1)
+#    
+#    b3 = numpy.random.rand(1000,1000)
+#    t = Timer("test(b3)", "from __main__ import test; from __main__ import b3")
+#    print "Random 1000x1000: ", t.timeit(number=1)
+#    
+#    d = numpy.ones((10,10))
+#    t = Timer("test(d)", "from __main__ import test; from __main__ import d")
+#    print "Ones 10x10: ", t.timeit(number=1)
+#    
+#    d1 = numpy.ones((100,100))
+#    t = Timer("test(d1)", "from __main__ import test; from __main__ import d1")
+#    print "Ones 100x100: ", t.timeit(number=1)
+#
+#    d2 = numpy.ones((1000,1000))
+#    t = Timer("test(d2)", "from __main__ import test; from __main__ import d2")
+#    print "Ones 1000x1000: ", t.timeit(number=1)
+#
+#    w = numpy.zeros((10,10))
+#    t = Timer("test(w)", "from __main__ import test; from __main__ import w")
+#    print "Zeros 10x10: ", t.timeit(number=1)
+#    
+#    w1 = numpy.zeros((100,100))
+#    t = Timer("test(w1)", "from __main__ import test; from __main__ import w1")
+#    print "Zeros 100x100: ", t.timeit(number=1)
+#    
+#    w2 = numpy.zeros((1000,1000))
+#    t = Timer("test(w2)", "from __main__ import test; from __main__ import w2")
+#    print "Zeros 1000x1000: ", t.timeit(number=1)
+#    
+#    
