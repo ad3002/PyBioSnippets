@@ -325,6 +325,17 @@ if __name__ == '__main__':
     assert test(a2) == 19 
     t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
     print "Simple case: ", t.timeit(number=1)
+    
+    a2 = numpy.array([[0,3,3,1,3,3,0],
+                      [0,3,1,1,1,3,1],
+                      [0,3,1,0,1,3,1],
+                      [0,3,1,1,1,3,1],
+                      [0,3,3,3,3,3,1]
+                      ])
+    
+    assert test(a2) == 1
+    t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
+    print "Simple case: ", t.timeit(number=1)
      
     
     
