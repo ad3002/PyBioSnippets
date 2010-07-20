@@ -48,10 +48,13 @@ def alg_fill_bottom(a):
         checked = set()
         added_floors = set()
         
+        print "  height: ", H
          
         # края нам не интересны
         for gi in range(1,bottom_border):
             for gj in range(1,right_border):
+         
+                
          
                 # нам интересны только донышки
                 if a[gi,gj] > H :
@@ -102,10 +105,10 @@ def alg_fill_bottom(a):
                         k += 1
                         # print "  check left: ", i, j-k
                         
-                        if a[i,j-1] == 0:
+                        if a[i,j-1] == H:
                             # print "   pass zero"
                             if i == 0 or j-1 == 0 or i == bottom_border or j-1 == right_border:
-                                borders[0] = 0
+                                borders[0] = H
                                 # print "    +zero border:", i, j-1 
                             break
                         
@@ -113,10 +116,10 @@ def alg_fill_bottom(a):
                             # print "   pass checked"
                             break
                         elif j-k < 0:
-                            borders[0] = 0
+                            borders[0] = H
                             # print "   left leak added"
                             break
-                        elif a[i, j-k] > 0:
+                        elif a[i, j-k] > H:
                             borders[(i, j-k)] = a[i,j-k]
                             # print "   left border added"
                             break
@@ -133,10 +136,10 @@ def alg_fill_bottom(a):
                         k += 1
                         
                         # print "  check right: ", i, j+k
-                        if a[i,j-1] == 0:
+                        if a[i,j-1] == H:
                             # print "   pass zero"
                             if i == 0 or j-1 ==0 or i == bottom_border or j-1 == right_border:
-                                borders[0] = 0
+                                borders[0] = H
                                 # print "    +zero border", i, j-1
                             break
                         
@@ -144,10 +147,10 @@ def alg_fill_bottom(a):
                             # print "   pass checked"
                             break
                         elif j+k == M:
-                            borders[0] = 0
+                            borders[0] = H
                             # print "   right leak added"
                             break
-                        elif a[i, j+k] > 0:
+                        elif a[i, j+k] > H:
                             borders[(i, j+k)] = a[i,j+k]
                             # print "   right border added"
                             break
@@ -164,10 +167,10 @@ def alg_fill_bottom(a):
                         k += 1
                         # print "  check top: ", i-k, j
          
-                        if a[i-1,j] == 0:
+                        if a[i-1,j] == H:
                             # print "   pass zero"
                             if i-1 == 0 or j ==0 or i-1 == bottom_border or j == right_border:
-                                borders[0] = 0
+                                borders[0] = H
                                 # print "    +zero border", i-1, j
                             break
          
@@ -175,10 +178,10 @@ def alg_fill_bottom(a):
                             # print "   pass checked"
                             break
                         elif i-k < 0:
-                            borders[0] = 0
+                            borders[0] = H
                             # print "   top leak added"
                             break
-                        elif a[i-k, j] > 0:
+                        elif a[i-k, j] > H:
                             borders[(i-k, j)] = a[i-k,j]
                             # print "   top border added"
                             break
@@ -195,9 +198,9 @@ def alg_fill_bottom(a):
                         k += 1
                         # print "  check bottom: ", i+k, j
          
-                        if a[i-1,j] == 0:
+                        if a[i-1,j] == H:
                             if i-1 == 0 or j ==0 or i-1 == bottom_border or j == right_border:
-                                borders[0] = 0
+                                borders[0] = H
                                 # print "    +zero border", i-1, j
                             break
          
@@ -205,10 +208,10 @@ def alg_fill_bottom(a):
                             # print "   pass checked"
                             break
                         elif i+k == N:
-                            borders[0] = 0
+                            borders[0] = H
                             # print "   bottom leak added"
                             break
-                        elif a[i+k, j] > 0:
+                        elif a[i+k, j] > H:
                             borders[(i+k, j)] = a[i+k,j]
                             # print "   bottom border added"
                             break
