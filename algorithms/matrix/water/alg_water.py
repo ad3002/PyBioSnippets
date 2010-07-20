@@ -13,25 +13,20 @@ def alg_fill_bottom(a):
     @param a: numpy 2d array
     '''
  
-    print "-"*10
- 
     N,M = a.shape
     
     right_border = M-1
     bottom_border = N-1 
     
-    
     global_value = 0
     
-    print "Size: ", N, M
-     
+    # print "Size: ", N, M
     # preprocessing: compute all heights
     
     avaliable_heights = set()
     for gi in range(0,N):
         for gj in range(0,M):
             avaliable_heights.add(a[gi,gj])
-            
     
     avaliable_heights = list(avaliable_heights)
     avaliable_heights.sort()
@@ -40,21 +35,18 @@ def alg_fill_bottom(a):
     
     print "Heights: ", len(avaliable_heights)
     
-    global_calculated_cells = []
-    
-    
     for H in avaliable_heights[:-1]:
      
         checked = set()
         added_floors = set()
         
-        print "  height: ", H
+        global_leak_cells = []
+        
+        # print "  height: ", H, len(global_calculated_cells)
          
         # края нам не интересны
         for gi in range(1,bottom_border):
             for gj in range(1,right_border):
-         
-                
          
                 # нам интересны только донышки
                 if a[gi,gj] > H :
@@ -63,13 +55,12 @@ def alg_fill_bottom(a):
                 if a[gi,gj] <= min_height:
                     continue
                 
-                if (gi,gj) in global_calculated_cells:
+                if (gi, gj) in global_leak_cells:
                     continue
                 
                 # донышки которые уже смотрели скипим
                 if (gi,gj) in checked:
                     continue
-         
          
                 floors = []
                 floors.append([gi,gj])
@@ -228,13 +219,13 @@ def alg_fill_bottom(a):
                     value = (height-H)*len(local_number_floors)
                     
                     if value > 0:
-                    
                         global_value += value
-                    
-                # мы не считаем одно и тоже нексколь раз
-                for item in local_number_floors:
-                    global_calculated_cells.append(item)
-                            
+                
+                    else:
+                        # мы не считаем ячейки из которых выливается за границу
+                        for item in local_number_floors:
+                            global_leak_cells.append(item)
+                                
                     
                     # print "="*10
 #                    print "borders: ", borders
@@ -324,27 +315,38 @@ if __name__ == '__main__':
     t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
     print "Simple case: ", t.timeit(number=1)
      
+    a2 = numpy.array([[0,3,3,3,3,3,0],
+                      [0,3,1,1,1,3,1],
+                      [0,3,1,0,1,3,1],
+                      [0,3,1,1,1,3,1],
+                      [0,3,3,3,3,3,1]
+                      ])
+    
+    assert test(a2) == 19 
+    t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
+    print "Simple case: ", t.timeit(number=1)
+     
     
 #    gr = gen_grebenka(1000,1000)
 #    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
 #    print "Grebenka 1000x1000 case: ", t.timeit(number=1)
     
     # тестим зависимость от количества высот
-    for k in range(0,11):
-        a = numpy.random.rand(1000,1000)
-        
-        N,M = a.shape
-        
-        for i in range(0,N):
-            for j in range(0,M):
-                a[i,j] = round(a[i,j], 1) 
-        
-        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
-        print "Random 1000x1000, %s proc of zeros: " % (10*k), t.timeit(number=1)   
-
-    s = get_spiral()
-    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
-    print "Spiral case 1000x1000: ", t.timeit(number=1)
+#    for k in range(0,11):
+#        a = numpy.random.rand(100,100)
+#        
+#        N,M = a.shape
+#        
+#        for i in range(0,N):
+#            for j in range(0,M):
+#                a[i,j] = round(a[i,j], 1) 
+#        
+#        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+#        print "Random 1000x1000, %s proc of zeros: " % (10*k), t.timeit(number=1)   
+#
+#    s = get_spiral()
+#    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
+#    print "Spiral case 1000x1000: ", t.timeit(number=1)
 
     
     
