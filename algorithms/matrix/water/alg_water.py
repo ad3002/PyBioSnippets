@@ -370,28 +370,43 @@ if __name__ == '__main__':
                 
     
 #    тестим зависимость от количества высот
-    for k in [2,3,5,10,100]:
-        a = numpy.random.rand(100,100)
+#    for k in [2,3,5,10,100]:
+#        a = numpy.random.rand(100,100)
+#        N,M = a.shape
+#        for i in range(0,N):
+#            for j in range(0,M):
+#                a[i,j] = add_height(a[i,j], k) 
+#        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+#        print "Random 100x100x%s: " % (k), t.timeit(number=1)   
+
+#    gr = gen_grebenka(100,100)
+#    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
+#    print "Grebenka 100x100 case: ", t.timeit(number=1)
+#    
+#    gr = gen_grebenka(1000,1000)
+#    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
+#    print "Grebenka 1000x1000x501 case: ", t.timeit(number=1)
+#    
+#    s = get_spiral()
+#    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
+#    print "Spiral case 1000x1000: ", t.timeit(number=1)
+    
+    # тестим зависимость от размера
+    
+    for k in [4000]:
+        a = numpy.random.rand(k,k)
         N,M = a.shape
         for i in range(0,N):
             for j in range(0,M):
-                a[i,j] = add_height(a[i,j], k) 
-        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
-        print "Random 100x100x%s: " % (k), t.timeit(number=1)   
+                a[i,j] = add_height(a[i,j], 3) 
 
-    gr = gen_grebenka(100,100)
-    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
-    print "Grebenka 100x100 case: ", t.timeit(number=1)
+#        cProfile.run('alg_fill_bottom(a)')
+        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+        print "Random %sx%sx3: " % (k,k), t.timeit(number=1)
     
-    gr = gen_grebenka(1000,1000)
-    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
-    print "Grebenka 1000x1000x501 case: ", t.timeit(number=1)
     
-    s = get_spiral()
-    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
-    print "Spiral case 1000x1000: ", t.timeit(number=1)
     
-    # тестим зависимость от размера
+    # тестим зависимость от количества высот на большом датасете
     
     import cProfile
     
