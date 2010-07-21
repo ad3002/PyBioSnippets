@@ -30,7 +30,6 @@ def alg_fill_bottom(a):
     
     avaliable_heights = list(avaliable_heights)
     avaliable_heights.sort()
-    
     min_height = avaliable_heights[0] - 1
     
     # print "Heights: ", len(avaliable_heights)
@@ -38,9 +37,9 @@ def alg_fill_bottom(a):
     for H in avaliable_heights[:-1]:
      
         checked = set()
-        added_floors = set()
+#        added_floors = set()
         
-        global_leak_cells = []
+        global_leak_cells = set()
         
         # print "  height: ", H, len(global_calculated_cells)
          
@@ -62,11 +61,11 @@ def alg_fill_bottom(a):
                 if (gi,gj) in checked:
                     continue
          
-                floors = []
-                floors.append([gi,gj])
+                floors = set()
+                floors.add((gi,gj))
          
                 local_number_floors = []
-                added_floors.add((gi,gj))
+#                added_floors.add((gi,gj))
                 borders = {}
          
                 while floors:
@@ -115,10 +114,10 @@ def alg_fill_bottom(a):
                             # print "   left border added"
                             break
                         else:
-                            if not (i, j-k) in added_floors and j-k > 0:
+                            if not (i, j-k) in floors and j-k > 0:
                                 # print "   left cell added"
-                                floors.append((i, j-k))
-                                added_floors.add((i, j-k))
+                                floors.add((i, j-k))
+#                                added_floors.add((i, j-k))
          
                     # вправо
          
@@ -146,10 +145,10 @@ def alg_fill_bottom(a):
                             # print "   right border added"
                             break
                         else:
-                            if not (i, j+k) in added_floors and j+k!=right_border :
+                            if not (i, j+k) in floors and j+k!=right_border :
                                 # print "   right cell added"
-                                floors.append((i, j+k))
-                                added_floors.add((i, j+k))
+                                floors.add((i, j+k))
+#                                added_floors.add((i, j+k))
          
                     # вверх
          
@@ -177,10 +176,10 @@ def alg_fill_bottom(a):
                             # print "   top border added"
                             break
                         else:
-                            if not (i-k, j) in added_floors and i-j>0:
+                            if not (i-k, j) in floors and i-j>0:
                                 # print "   top cell added"
-                                floors.append((i-k, j))
-                                added_floors.add((i-k, j))
+                                floors.add((i-k, j))
+#                                added_floors.add((i-k, j))
          
                     # вниз
          
@@ -207,10 +206,10 @@ def alg_fill_bottom(a):
                             # print "   bottom border added"
                             break
                         else:
-                            if not (i+k, j) in added_floors and i+k != bottom_border:
+                            if not (i+k, j) in floors and i+k != bottom_border:
                                 # print "   bottom cell added"
-                                floors.append((i+k, j))
-                                added_floors.add((i+k, j))
+                                floors.add((i+k, j))
+#                                added_floors.add((i+k, j))
                                 
                     
                     
@@ -224,7 +223,7 @@ def alg_fill_bottom(a):
                     else:
                         # мы не считаем ячейки из которых выливается за границу
                         for item in local_number_floors:
-                            global_leak_cells.append(item)
+                            global_leak_cells.add(item)
                                 
                     
                     # print "="*10
@@ -394,14 +393,22 @@ if __name__ == '__main__':
     
     # тестим зависимость от размера
     
-    for k in [2,3,5,10]:
+    import cProfile
+    
+    for k in [2,3,5,10,100]:
         a = numpy.random.rand(1000,1000)
         N,M = a.shape
         for i in range(0,N):
             for j in range(0,M):
                 a[i,j] = add_height(a[i,j], k) 
+
+#        cProfile.run('alg_fill_bottom(a)')
         t = Timer("test(a)", "from __main__ import test;from __main__ import a")
         print "Random 1000x1000x%s: " % (k), t.timeit(number=1)   
+    
+    
+
+    
     
    
 #    
