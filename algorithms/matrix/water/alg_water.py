@@ -10,7 +10,7 @@ import numpy
  
 def get_volume(a):
     '''
-    @param a: numpy 2d array
+    @param a: any array or list
     '''
 
     if not a.__class__ is numpy.ndarray:
