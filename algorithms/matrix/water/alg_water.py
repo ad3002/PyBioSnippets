@@ -240,10 +240,6 @@ def get_volume(a):
     
     return global_value
     
-    
-def test(a):
-    return get_volume(a)
-  
 def get_circle(k):
     
      a = numpy.ones((k,k))
@@ -274,7 +270,7 @@ def get_spiral():
     return a
     
 
-def gen_grebenka(N,M):
+def get_grebenka(N,M):
     s = [M+N+M+N] * M
     res = []
     for i in xrange(N):
@@ -297,11 +293,11 @@ if __name__ == '__main__':
     print get_volume(a)
     
     a = get_circle(10)
-    assert test(a) == 28
+    assert get_volume(a) == 28
     a = get_circle(100)
-    assert test(a) == 388
+    assert get_volume(a) == 388
     a = get_circle(1000)
-    assert test(a) == 3988 
+    assert get_volume(a) == 3988 
     
     a2 = numpy.array([ [0,2,1,0,1,1,1],
                       [2,0,5,0,1,0,1],
@@ -309,8 +305,8 @@ if __name__ == '__main__':
                       [0,1,5,0,1,0,1]
                       ])
     
-    assert test(a2) == 8 
-    t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
+    assert get_volume(a2) == 8 
+    t = Timer("get_volume(a2)", "from __main__ import get_volume; from __main__ import a2")
     print "Simple case: ", t.timeit(number=1)
     
     a2 = numpy.array([ [0,2,1,0,1,1,1],
@@ -319,8 +315,8 @@ if __name__ == '__main__':
                       [0,1,5,0,1,0,1]
                       ])
     
-    assert test(a2) == 7 
-    t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
+    assert get_volume(a2) == 7 
+    t = Timer("get_volume(a2)", "from __main__ import get_volume; from __main__ import a2")
     print "Simple case: ", t.timeit(number=1)
      
     a2 = numpy.array([[0,3,3,3,3,3,0],
@@ -330,8 +326,8 @@ if __name__ == '__main__':
                       [0,3,3,3,3,3,1]
                       ])
     
-    assert test(a2) == 19 
-    t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
+    assert get_volume(a2) == 19 
+    t = Timer("get_volume(a2)", "from __main__ import get_volume; from __main__ import a2")
     print "Simple case: ", t.timeit(number=1)
     
     a2 = numpy.array([[0,3,3,1,3,3,0],
@@ -341,8 +337,8 @@ if __name__ == '__main__':
                       [0,3,3,3,3,3,1]
                       ])
     
-    assert test(a2) == 1
-    t = Timer("test(a2)", "from __main__ import test; from __main__ import a2")
+    assert get_volume(a2) == 1
+    t = Timer("get_volume(a2)", "from __main__ import get_volume; from __main__ import a2")
     print "Simple case: ", t.timeit(number=1)
      
     
@@ -385,19 +381,19 @@ if __name__ == '__main__':
         for i in range(0,N):
             for j in range(0,M):
                 a[i,j] = add_height(a[i,j], k) 
-        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+        t = Timer("get_volume(a)", "from __main__ import get_volume;from __main__ import a")
         print "Random 100x100x%s: " % (k), t.timeit(number=1)   
 
-    gr = gen_grebenka(100,100)
-    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
+    gr = get_grebenka(100,100)
+    t = Timer("get_volume(gr)", "from __main__ import get_volume; from __main__ import gr")
     print "Grebenka 100x100 case: ", t.timeit(number=1)
     
-    gr = gen_grebenka(1000,1000)
-    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
+    gr = get_grebenka(1000,1000)
+    t = Timer("get_volume(gr)", "from __main__ import get_volume; from __main__ import gr")
     print "Grebenka 1000x1000x501 case: ", t.timeit(number=1)
     
     s = get_spiral()
-    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
+    t = Timer("get_volume(s)", "from __main__ import get_volume; from __main__ import s")
     print "Spiral case 1000x1000: ", t.timeit(number=1)
     
     # тестим зависимость от размера
@@ -410,7 +406,7 @@ if __name__ == '__main__':
                 a[i,j] = add_height(a[i,j], 3) 
 
 #        cProfile.run('get_volume(a)')
-        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+        t = Timer("get_volume(a)", "from __main__ import get_volume;from __main__ import a")
         print "Random %sx%sx3: " % (k,k), t.timeit(number=1)
     
     
@@ -427,7 +423,7 @@ if __name__ == '__main__':
                 a[i,j] = add_height(a[i,j], k) 
 
 #        cProfile.run('get_volume(a)')
-        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+        t = Timer("get_volume(a)", "from __main__ import get_volume;from __main__ import a")
         print "Random 1000x1000x%s: " % (k), t.timeit(number=1)   
     
     
@@ -438,39 +434,39 @@ if __name__ == '__main__':
 #    
 #    
 #    b1 = numpy.random.rand(10,10)
-#    t = Timer("test(b1)", "from __main__ import test; from __main__ import b1")
+#    t = Timer("get_volume(b1)", "from __main__ import get_volume; from __main__ import b1")
 #    print "Random 10x10: ", t.timeit(number=1)
 #    
 #    b2 = numpy.random.rand(100,100)
-#    t = Timer("test(b2)", "from __main__ import test; from __main__ import b2")
+#    t = Timer("get_volume(b2)", "from __main__ import get_volume; from __main__ import b2")
 #    print "Random 100x100: ", t.timeit(number=1)
 #    
 #    b3 = numpy.random.rand(1000,1000)
-#    t = Timer("test(b3)", "from __main__ import test; from __main__ import b3")
+#    t = Timer("get_volume(b3)", "from __main__ import get_volume; from __main__ import b3")
 #    print "Random 1000x1000: ", t.timeit(number=1)
 #    
 #    d = numpy.ones((10,10))
-#    t = Timer("test(d)", "from __main__ import test; from __main__ import d")
+#    t = Timer("get_volume(d)", "from __main__ import get_volume; from __main__ import d")
 #    print "Ones 10x10: ", t.timeit(number=1)
 #    
 #    d1 = numpy.ones((100,100))
-#    t = Timer("test(d1)", "from __main__ import test; from __main__ import d1")
+#    t = Timer("get_volume(d1)", "from __main__ import get_volume; from __main__ import d1")
 #    print "Ones 100x100: ", t.timeit(number=1)
 #
 #    d2 = numpy.ones((1000,1000))
-#    t = Timer("test(d2)", "from __main__ import test; from __main__ import d2")
+#    t = Timer("get_volume(d2)", "from __main__ import get_volume; from __main__ import d2")
 #    print "Ones 1000x1000: ", t.timeit(number=1)
 #
 #    w = numpy.zeros((10,10))
-#    t = Timer("test(w)", "from __main__ import test; from __main__ import w")
+#    t = Timer("get_volume(w)", "from __main__ import get_volume; from __main__ import w")
 #    print "Zeros 10x10: ", t.timeit(number=1)
 #    
 #    w1 = numpy.zeros((100,100))
-#    t = Timer("test(w1)", "from __main__ import test; from __main__ import w1")
+#    t = Timer("get_volume(w1)", "from __main__ import get_volume; from __main__ import w1")
 #    print "Zeros 100x100: ", t.timeit(number=1)
 #    
 #    w2 = numpy.zeros((1000,1000))
-#    t = Timer("test(w2)", "from __main__ import test; from __main__ import w2")
+#    t = Timer("get_volume(w2)", "from __main__ import get_volume; from __main__ import w2")
 #    print "Zeros 1000x1000: ", t.timeit(number=1)
 #    
 #    
