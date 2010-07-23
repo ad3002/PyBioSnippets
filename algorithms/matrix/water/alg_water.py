@@ -8,11 +8,14 @@
 import numpy
 
  
-def alg_fill_bottom(a):
+def get_volume(a):
     '''
     @param a: numpy 2d array
     '''
- 
+
+    if not a.__class__ is numpy.ndarray:
+        a = numpy.asarray(a)
+
     N,M = a.shape
     
     right_border = M-1
@@ -239,7 +242,7 @@ def alg_fill_bottom(a):
     
     
 def test(a):
-    return alg_fill_bottom(a)
+    return get_volume(a)
   
 def get_circle(k):
     
@@ -283,9 +286,15 @@ def gen_grebenka(N,M):
         res[N-2][y] = 0
     return numpy.asarray(res)
     
+
+
 if __name__ == '__main__':
-    
+
     from timeit import Timer
+    
+    a = [[1,4,3],[8,2.1,4],[7,6,5]]
+    
+    print get_volume(a)
     
     a = get_circle(10)
     assert test(a) == 28
@@ -370,37 +379,37 @@ if __name__ == '__main__':
                 
     
 #    тестим зависимость от количества высот
-#    for k in [2,3,5,10,100]:
-#        a = numpy.random.rand(100,100)
-#        N,M = a.shape
-#        for i in range(0,N):
-#            for j in range(0,M):
-#                a[i,j] = add_height(a[i,j], k) 
-#        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
-#        print "Random 100x100x%s: " % (k), t.timeit(number=1)   
+    for k in [2,3,5,10,100]:
+        a = numpy.random.rand(100,100)
+        N,M = a.shape
+        for i in range(0,N):
+            for j in range(0,M):
+                a[i,j] = add_height(a[i,j], k) 
+        t = Timer("test(a)", "from __main__ import test;from __main__ import a")
+        print "Random 100x100x%s: " % (k), t.timeit(number=1)   
 
-#    gr = gen_grebenka(100,100)
-#    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
-#    print "Grebenka 100x100 case: ", t.timeit(number=1)
-#    
-#    gr = gen_grebenka(1000,1000)
-#    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
-#    print "Grebenka 1000x1000x501 case: ", t.timeit(number=1)
-#    
-#    s = get_spiral()
-#    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
-#    print "Spiral case 1000x1000: ", t.timeit(number=1)
+    gr = gen_grebenka(100,100)
+    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
+    print "Grebenka 100x100 case: ", t.timeit(number=1)
+    
+    gr = gen_grebenka(1000,1000)
+    t = Timer("test(gr)", "from __main__ import test; from __main__ import gr")
+    print "Grebenka 1000x1000x501 case: ", t.timeit(number=1)
+    
+    s = get_spiral()
+    t = Timer("test(s)", "from __main__ import test; from __main__ import s")
+    print "Spiral case 1000x1000: ", t.timeit(number=1)
     
     # тестим зависимость от размера
     
-    for k in [4000]:
+    for k in [10,50,100,200,400,600,800,1000,2000]:
         a = numpy.random.rand(k,k)
         N,M = a.shape
         for i in range(0,N):
             for j in range(0,M):
                 a[i,j] = add_height(a[i,j], 3) 
 
-#        cProfile.run('alg_fill_bottom(a)')
+#        cProfile.run('get_volume(a)')
         t = Timer("test(a)", "from __main__ import test;from __main__ import a")
         print "Random %sx%sx3: " % (k,k), t.timeit(number=1)
     
@@ -417,7 +426,7 @@ if __name__ == '__main__':
             for j in range(0,M):
                 a[i,j] = add_height(a[i,j], k) 
 
-#        cProfile.run('alg_fill_bottom(a)')
+#        cProfile.run('get_volume(a)')
         t = Timer("test(a)", "from __main__ import test;from __main__ import a")
         print "Random 1000x1000x%s: " % (k), t.timeit(number=1)   
     
