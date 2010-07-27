@@ -26,11 +26,10 @@ def get_volume(a):
     # print"Size: ", N, M
     
     avaliable_heights = set()
-    
     points = {}
     
-    for i in range(0,N):
-        for j in range(0,M):
+    for i in xrange(0,N):
+        for j in xrange(0,M):
             avaliable_heights.add(a[i][j])
             points.setdefault(a[i][j], [])
             if 0<i<bottom_border and 0<j<right_border:
@@ -38,36 +37,31 @@ def get_volume(a):
     
     avaliable_heights = list(avaliable_heights)
     avaliable_heights.sort()
-    
-    global_leak_cells = set()
+    global_checked = set()
     
     for H in avaliable_heights[:-1]:
         
-#        print "height cheking: ", H
+#        # print "height cheking: ", H
+
         checked = set()
  
         for gi,gj in points[H]:
         
-            if (gi, gj) in global_leak_cells or (gi,gj) in checked:
+            if (gi,gj) in checked or (gi, gj) in global_checked:
                 continue
             
             local_number_floors = set()
-            borders = {}
+            
      
             i = gi
             j = gj
             
-            # проверяем утечки
+            borders = [avaliable_heights[-1]]
             
-            if (i,j-1) in global_leak_cells or\
-               (i,j+1) in global_leak_cells or\
-               (i-1,j) in global_leak_cells or\
-               (i+1,j) in global_leak_cells:
-                # print "  neib. leak found",i,j
-                borders[0] = H
             
             def check_line(i,j):
-#                print "  checking: ",i,j
+                # print "  checking: ",i,j
+                
                 if a[i][j] == H:
                     if i == 0 or j == 0 or i == bottom_border or j == right_border:  
                         borders[0] = H
@@ -87,12 +81,12 @@ def get_volume(a):
                         if not (i,j-1) in checked:
                             check_line(i,j-1)
                         return
-                    # print "error",i,j
                     return
                 elif a[i][j] > H:
                     # print "    new border: ",i,j
-                    borders[(i, j)] = a[i][j]
+                    borders[0] = min(borders[0], a[i][j])
                     checked.add((i,j))
+                    
                     return
                 else:
                     if not (i, j) in local_number_floors:
@@ -113,13 +107,15 @@ def get_volume(a):
             if not (i,j) in checked:
                 check_line(i,j)
            
-            if borders:
-                height = min( [ b for b in borders.values()] )
-                value = (height-H)*len(local_number_floors)
+            if borders[0] > H:
+                value = (borders[0]-H)*len(local_number_floors)
                 
                 if value > 0:
                     global_value += value
                 else:
-                    global_leak_cells.update(local_number_floors)
+                    global_checked.update(local_number_floors)
               
+
+    
     return global_value
+
