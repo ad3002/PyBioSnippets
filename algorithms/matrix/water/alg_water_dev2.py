@@ -14,12 +14,10 @@ def get_volume(a):
     @param a: any array or list
     '''
 
-    if not a.__class__ is numpy.ndarray:
-        a = numpy.asarray(a)
-
     # print "\n",a
 
-    N,M = a.shape
+    N = len(a)
+    M = len(a[0])
     
     right_border = M-1
     bottom_border = N-1 
@@ -33,19 +31,16 @@ def get_volume(a):
     
     for i in range(0,N):
         for j in range(0,M):
-            avaliable_heights.add(a[i,j])
-            points.setdefault(a[i,j], [])
+            avaliable_heights.add(a[i][j])
+            points.setdefault(a[i][j], [])
             if 0<i<bottom_border and 0<j<right_border:
-                points[a[i,j]].append((i,j))
+                points[a[i][j]].append((i,j))
     
     avaliable_heights = list(avaliable_heights)
     avaliable_heights.sort()
     
-    # print"Heights: ", len(avaliable_heights)
-    
     global_leak_cells = set()
     
-    # края нам не интересны
     for H in avaliable_heights[:-1]:
         
 #        print "height cheking: ", H
@@ -73,7 +68,7 @@ def get_volume(a):
             
             def check_line(i,j):
 #                print "  checking: ",i,j
-                if a[i,j] == H:
+                if a[i][j] == H:
                     if i == 0 or j == 0 or i == bottom_border or j == right_border:  
                         borders[0] = H
                         checked.add((i,j))
@@ -94,9 +89,9 @@ def get_volume(a):
                         return
                     # print "error",i,j
                     return
-                elif a[i,j] > H:
+                elif a[i][j] > H:
                     # print "    new border: ",i,j
-                    borders[(i, j)] = a[i,j]
+                    borders[(i, j)] = a[i][j]
                     checked.add((i,j))
                     return
                 else:
