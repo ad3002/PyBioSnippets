@@ -463,12 +463,12 @@ def get_ncbi_genome_list_page(parser):
 
 def print_genome_per_year(data):
     per_year = {}
-    for x in data:
-        y = x.released.split("/")[-1]
-        per_year.setdefault(y, 0)
-        per_year[y] += 1
-    for x, i in per_year.items():
-        print x, i
+    for obj in data:
+        year = obj.released.split("/")[-1]
+        per_year.setdefault(year, 0)
+        per_year[year] += 1
+    for year, n in per_year.items():
+        print year, n
     
 if __name__ == '__main__':
     pass
