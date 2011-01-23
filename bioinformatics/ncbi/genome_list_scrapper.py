@@ -68,7 +68,7 @@ class WGSProjectData(object):
 
 class EuGenomeProjectData(object):
     '''
-    Container with eukaryotic genome information
+    A container for eukaryotic genome information
     '''
     gpid = None
     taxon = None
@@ -85,7 +85,7 @@ class EuGenomeProjectData(object):
     
 class ProGenomeProjectData(object):
     '''
-    Container with prokaryotic genome information
+    A container for prokaryotic genome information
     '''
     pid = None
     gpid = None
@@ -104,7 +104,7 @@ class ProGenomeProjectData(object):
         
 class MetaGenomeProjectData(object):
     '''
-    Container with metagenomics information
+    A container for metagenomics information
     '''
     overview_id = None
     gpid = None
@@ -130,7 +130,7 @@ def parse_link(element, reg_exp=None):
 def parser_ncbi_viri_genome_list(page):
     '''
     Function parses a page with virus genomes 
-    and return #genomes, list of genome's info containers.
+    and returns #genomes, list of genome's info containers.
     '''
     re_tr_item = u"<tr bgcolor=\"#F.*?\">(.*?)</tr>"
     items = re.findall(re_tr_item, page, re.S|re.I)
@@ -193,7 +193,7 @@ def parser_ncbi_viri_genome_list(page):
 def parser_ncbi_wgs_list(page):
     '''
     Function parses a page with WGS assemblies 
-    and return #wgs, list of WGS's info containers.
+    and returns #wgs, list of WGS's info containers.
     '''
     re_genome_item = u"-->\s*<TR>.*?</TR>"
     re_a_item_local = u"<A.*?HREF=\"?(.*?)\"?[^>]*>(.*?)</A>"
@@ -249,7 +249,7 @@ def parser_ncbi_wgs_list(page):
 def parser_ncbi_meta_genome_list(page):
     '''
     Function parses a page with virus genomes 
-    and return #genomes, list of genome's info containers.
+    and returns #genomes, list of genome's info containers.
     '''
     re_tr_item = u"<tr class=\"trcolor.\">(.*?)</tr>"
     items = re.findall(re_tr_item, page, re.S|re.I)
@@ -308,7 +308,7 @@ def parser_ncbi_meta_genome_list(page):
 def parser_ncbi_pro_genome_list(page):
     '''
     Function parses a page with virus genomes 
-    and return #genomes, list of genome's info containers.
+    and returns #genomes, list of genome's info containers.
     '''
     re_tr_item = u"<tr bgcolor=\"#E.*?\">(.*?)</tr>"
     items = re.findall(re_tr_item, page, re.S|re.I)
@@ -387,7 +387,7 @@ def parser_ncbi_pro_genome_list(page):
 def parser_ncbi_eu_genome_list(page):
     '''
     Function parses a page with virus genomes 
-    and return #genomes, list of genome's info containers.
+    and returns #genomes, list of genome's info containers.
     '''
     re_tr_item = u"<tr class=\"trcolor.\">(.*?)</tr>"
     items = re.findall(re_tr_item, page, re.S|re.I)
