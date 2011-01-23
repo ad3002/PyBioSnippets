@@ -61,8 +61,8 @@ class WGSProjectData(object):
     prefix = None
     gpid = None
     taxon = None
-    contigs = 0 
-    cons = 0
+    contigs = None 
+    cons = None
     annotation = None
     complete = None
 
