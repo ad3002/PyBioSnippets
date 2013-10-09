@@ -4,12 +4,15 @@
 #@created: 09.10.2013
 #@author: Aleksey Komissarov
 #@contact: ad3002@gmail.com
+'''
+Computation data for coverage plots based on kmer frequences.
+'''
 
 import sys
 from collections import defaultdict
 
 def compute_histogram(data_tab_file):
-	'''
+	''' Compute from kmer -> tf data to tf -> freq.
 	'''
 	D = defaultdict(int)
 	with open(data_tab_file) as fh:
@@ -19,7 +22,7 @@ def compute_histogram(data_tab_file):
 	return D
 
 def compute_kmers_freq(D, output_file):
-	'''
+	''' Compute from tf -> freq to freq -> percent freq of freq
 	'''
 	total = 0.0
 	for x, y in lines:
@@ -33,7 +36,9 @@ def compute_kmers_freq(D, output_file):
 	        fh.write(s)
 
 def main(input_file, output_file):
-	'''
+	''' Main function. 
+	Input jellyfish dump file.
+	Output - freq to percent freq of freq data.
 	'''
 	D = compute_histogram(input_file)
 	compute_kmers_freq(D, output_file)
