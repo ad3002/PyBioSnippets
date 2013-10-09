@@ -38,5 +38,13 @@ def main(input_file, output_file):
 	D = compute_histogram(input_file)
 	compute_kmers_freq(D, output_file)
 
+if __name__ == '__main__':
 
+	if len(sys.argv) != 3:
+		print "Usage: name.py input_file output_file"
+		exit(0)
+	else:
+		data_tab_file = sys.argv[1]
+		output_file = sys.argv[2]
+	main(input_file, output_file)
 	
