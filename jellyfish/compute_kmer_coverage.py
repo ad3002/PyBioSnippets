@@ -5,7 +5,8 @@
 #@author: Aleksey Komissarov
 #@contact: ad3002@gmail.com
 '''
-Computation data for coverage plots based on kmer frequences.
+Computation data for coverage plots based on kmer frequences 
+using jellyfish dump files.
 '''
 
 import sys
