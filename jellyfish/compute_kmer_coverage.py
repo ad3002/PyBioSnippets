@@ -32,3 +32,11 @@ def compute_kmers_freq(D, output_file):
 	        s = "%s\t%s\n" % (k, round(100*v/total, 3))
 	        fh.write(s)
 
+def main(input_file, output_file):
+	'''
+	'''
+	D = compute_histogram(input_file)
+	compute_kmers_freq(D, output_file)
+
+
+	
