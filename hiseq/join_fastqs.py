@@ -9,6 +9,7 @@ Join fragmented fastq files from HiSeq.
 '''
 
 import os
+import sys
 from collections import defaultdict
 
 def join_hiseq_files(folder):

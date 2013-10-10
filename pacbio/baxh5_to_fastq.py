@@ -12,7 +12,7 @@ You need:
 2) https://github.com/ad3002/PyExp
 
 '''
-
+import sys
 from pbcore.io import CmpH5Reader
 from pbcore.io import BasH5Reader
 from PyExp import sc_iter_filepath_folder
