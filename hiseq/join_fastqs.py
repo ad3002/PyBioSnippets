@@ -29,6 +29,7 @@ def join_hiseq_files(folder, mask):
 		input_data = " ".join(join_groups[name])
 		command = "cat %s > %s" % (input_data, output_file)
 		print command
+		os.system(command)
 
 if __name__ == '__main__':
 	if len(sys.argv) != 3:
