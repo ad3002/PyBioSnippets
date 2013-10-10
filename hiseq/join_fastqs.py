@@ -23,3 +23,11 @@ def join_hiseq_files(folder):
                     similar_part = "_".join(name[:4])
                     join_groups[similar_part].append(apath)
     print join_groups
+
+if __name__ == '__main__':
+	if len(sys.argv) != 2:
+		print "Usage: name.py input_folder"
+		exit(0)
+	else:
+		folder = sys.argv[1]
+	join_hiseq_files(folder)
