@@ -21,3 +21,11 @@ cat *fasta > pacbio.fasta
 
 cat *fastq > pacbio.fastq
 ```
+
+## Chromosome statistics
+
+Get dictionary with chromosome lengths
+
+```python
+chr2length = get_chromosome_lengths(rerence_multifasta)
+```
