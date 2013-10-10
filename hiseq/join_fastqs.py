@@ -22,7 +22,7 @@ def join_hiseq_files(folder, mask):
 			if re.search(mask, name):
 				apath = os.path.join(root, name)
 				name_parts = name.split("_")
-				similar_part = "_".join(name[:4])
+				similar_part = "_".join(name_parts[:4])
 				join_groups[similar_part].append(apath)
 	print join_groups
 
