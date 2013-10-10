@@ -24,7 +24,11 @@ def join_hiseq_files(folder, mask):
 				name_parts = name.split("_")
 				similar_part = "_".join(name_parts[:4])
 				join_groups[similar_part].append(apath)
-	print join_groups
+	for name in join_groups:
+		output_file = "%s.fastq" % name
+		input_data = " ".join(join_groups[name])
+		command = "cat %s > %s" % (input_data, output_file)
+		print command
 
 if __name__ == '__main__':
 	if len(sys.argv) != 3:
