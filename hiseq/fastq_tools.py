@@ -43,3 +43,13 @@ def separate_reads_witn_n_and_sharps(fastq_file, output_file, reads_with_n_file,
 					else:
 						good_fh.write(read.fastq)
 	print
+
+def filter_reads_by_gc(fastq_file, output_file, min_gc, max_gc):
+	''' Filter reads between min_gc and max_gc.
+	'''
+	with open(output_file, "w") as fh:
+		for read in fastq_reader(fastq_file):
+			gc = read.gc
+			if gc < max_gc and gc > min_gc:
+				print round(gc, 3), read.seq
+				fh.write(read.fasta)
