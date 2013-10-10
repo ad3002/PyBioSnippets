@@ -10,15 +10,16 @@ Join fragmented fastq files from HiSeq.
 
 import os
 import sys
+import re
 from collections import defaultdict
 
-def join_hiseq_files(folder):
+def join_hiseq_files(folder, mask):
 	'''
 	'''
 	join_groups = defaultdict(list)
 	for root, dirs, files in os.walk(folder, topdown=False):
 		for name in files:
-			if re.search(self.mask, name):
+			if re.search(mask, name):
 				apath = os.path.join(root, name)
 				name_parts = name.split("_")
 				similar_part = "_".join(name[:4])
@@ -26,9 +27,10 @@ def join_hiseq_files(folder):
 	print join_groups
 
 if __name__ == '__main__':
-	if len(sys.argv) != 2:
-		print "Usage: name.py input_folder"
+	if len(sys.argv) != 3:
+		print "Usage: name.py input_folder mask"
 		exit(0)
 	else:
 		folder = sys.argv[1]
-	join_hiseq_files(folder)
+		mask = sys.argv[2]
+	join_hiseq_files(folder, mask)
