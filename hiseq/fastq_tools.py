@@ -21,6 +21,23 @@ def fix_uncorrect_long_quality(fastq_file, corrected_fastq_output):
 				print read.fastq
 			fh.write(read.fastq)
 
+def is_bad_read(sequence, qual):
+	''' Check read quality.
+	1. Presence of unknown nucelotides.
+	2. Presence of 0 quality nucelotides.
+	3. Presence of polyC tracks.
+	4. Presence of polyC tracks.
+	'''
+	if "n" in sequence:
+		return "N"
+	if "#" in qual:
+		return "zero_qual"
+	if "ccccccccccccccccccccccc" in sequence:
+		return "polyC"
+	if "ggggggggggggggggggggggg" in sequence:
+		return "polyG"
+	return None
+
 def separate_reads_witn_n_and_sharps(fastq_file, output_file, reads_with_n_file, reads_with_sharp_file):
 	''' Separate reads from fastq file witn N and sharp quality scores.
 	'''
