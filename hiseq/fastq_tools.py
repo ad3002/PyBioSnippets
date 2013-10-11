@@ -31,7 +31,7 @@ def is_bad_read(read):
 	if "n" in read.sequence:
 		return "N"
 	if "#" in read.qual:
-		return "zero_qual"
+		return "zeroQ"
 	if "ccccccccccccccccccccccc" in read.sequence:
 		return "polyC"
 	if "ggggggggggggggggggggggg" in read.sequence:
@@ -48,6 +48,14 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 
 	reader1 = fastq_reader(fastq1_file)
 	reader2 = fastq_reader(fastq2_file)
+
+	statistics = {
+		"OK": 0,
+		"N": 0,
+		"zeroQ": 0,
+		"polyC": 0,
+		"polyG": 0,
+	}
 
 	while True:
 		try:
@@ -74,7 +82,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 			bad.write(read2.fastq_with_error(error2))
 		else:
 			se.write(read2.fastq)
-
+			
 	wh1.close()
 	wh2.close()
 	se.close()
