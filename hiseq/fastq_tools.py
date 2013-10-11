@@ -50,7 +50,8 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	reader2 = fastq_reader(fastq2_file)
 
 	statistics = {
-		"OK": 0,
+		"pe": 0,
+		"se": 0,
 		"N": 0,
 		"zeroQ": 0,
 		"polyC": 0,
@@ -73,20 +74,27 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		if not error1 and not error2:
 			wh1.write(read1.fastq)
 			wh2.write(read2.fastq)
+			statistics["pe"] += 1
 			continue
 		if error1:
 			bad.write(read1.fastq_with_error(error1))
+			statistics[error1] += 1
 		else:
 			se.write(read1.fastq)
+			statistics["se"] += 1
 		if error2:
 			bad.write(read2.fastq_with_error(error2))
+			statistics[error2] += 1
 		else:
 			se.write(read2.fastq)
+			statistics["se"] += 1
 			
 	wh1.close()
 	wh2.close()
 	se.close()
 	bad.close()
+	print statistics
+	return statistics
 
 def separate_reads_witn_n_and_sharps(fastq_file, output_file, reads_with_n_file, reads_with_sharp_file):
 	''' Separate reads from fastq file witn N and sharp quality scores.
