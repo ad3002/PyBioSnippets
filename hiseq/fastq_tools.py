@@ -70,6 +70,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 				pass
 			raise Exception("Not equal number of reads in runs") 
 			break
+		read2 = next(reader2)
 		i += 1
 		print i, statistics, "\r",
 		error1 = is_bad_read(read1)
