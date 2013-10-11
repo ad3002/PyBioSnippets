@@ -134,3 +134,30 @@ def filter_reads_by_gc(fastq_file, output_file, min_gc, max_gc):
 			if gc < max_gc and gc > min_gc:
 				print round(gc, 3), read.seq
 				fh.write(read.fasta)
+
+
+def split_large_fastq_file(file_name, output_file_pattern, cutoff=1000000):
+	''' Split large fastq file.
+	For example:
+		output_file_pattern = "/home/akomissarov/data/asian_seabass/raw_reads/500bp_insert_lane1_read1.chunk%s.fastq"	
+	'''
+
+	def write_data(reads, chunk, output_file_pattern):
+		with open(output_file_pattern % chunk, "w") as fh:
+			for read in reads:
+				fh.write(read.fastq)
+
+	reads = []
+	chunk = 1
+	print "Read data..."
+	for i, read in enumerate(fastq_reader(file_name)):
+		print i, "\r",
+		if reads and i % cutoff == 0:
+			print "\nSave reads", i, "for chunk", chunk
+			write_data(reads, chunk, output_file_pattern)
+			chunk += 1
+			reads = []
+		reads.append(read)
+	if reads:
+		print "\nLast one. Save reads", i, "for chunk", chunk
+		write_data(reads, chunk, output_file_pattern)
