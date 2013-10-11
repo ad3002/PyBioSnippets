@@ -41,10 +41,10 @@ def is_bad_read(read):
 def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file):
 	'''
 	'''
-	wh1 = open(fastq1ok_file)
-	wh2 = open(fastq2ok_file)
-	se = open(fastq_se_file)
-	bad = open(fastq_bad_file)
+	wh1 = open(fastq1ok_file, "w")
+	wh2 = open(fastq2ok_file, "w")
+	se = open(fastq_se_file, "w")
+	bad = open(fastq_bad_file, "w")
 
 	reader1 = fastq_reader(fastq1_file)
 	reader2 = fastq_reader(fastq2_file)
@@ -58,6 +58,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		"polyG": 0,
 	}
 
+	i = 0
 	while True:
 		try:
 			read1 = next(reader1)
@@ -69,6 +70,8 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 				pass
 			raise Exception("Not equal number of reads in runs") 
 			break
+		i += 1
+		print i, statistics, "\r",
 		error1 = is_bad_read(read1)
 		error2 = is_bad_read(read2)
 		if not error1 and not error2:
@@ -93,8 +96,10 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	wh2.close()
 	se.close()
 	bad.close()
+	print
 	print statistics
 	return statistics
+
 
 def separate_reads_witn_n_and_sharps(fastq_file, output_file, reads_with_n_file, reads_with_sharp_file):
 	''' Separate reads from fastq file witn N and sharp quality scores.
