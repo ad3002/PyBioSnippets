@@ -22,3 +22,20 @@ def count_unmapped(sam_file):
 		print unmapped, mapped, "\r",
 	print 
 	print "Unmapped %s from %s mapped" % (unmapped, mapped)
+
+def save_unmapped_to_fasta(sam_file, fasta_file):
+	''' Save unmapped reads to file.
+	'''
+	print "Read data"
+	with open(sam_file) as fh:
+		datas = fh.readlines()
+	with open(fasta_file, "w") as fh:
+		for i, data in enumerate(datas):
+			print i, "\r",
+			data = data.strip().split("\t")
+			head = data[0].strip()
+			gid = data[2].strip()
+			seq = data[9].strip()
+			if gid == "*":
+				fh.write(">%s\n%s\n" % (head, seq))
+	print
