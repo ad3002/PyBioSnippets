@@ -21,22 +21,64 @@ def fix_uncorrect_long_quality(fastq_file, corrected_fastq_output):
 				print read.fastq
 			fh.write(read.fastq)
 
-def is_bad_read(sequence, qual):
+def is_bad_read(read):
 	''' Check read quality.
 	1. Presence of unknown nucelotides.
 	2. Presence of 0 quality nucelotides.
 	3. Presence of polyC tracks.
 	4. Presence of polyC tracks.
 	'''
-	if "n" in sequence:
+	if "n" in read.sequence:
 		return "N"
-	if "#" in qual:
+	if "#" in read.qual:
 		return "zero_qual"
-	if "ccccccccccccccccccccccc" in sequence:
+	if "ccccccccccccccccccccccc" in read.sequence:
 		return "polyC"
-	if "ggggggggggggggggggggggg" in sequence:
+	if "ggggggggggggggggggggggg" in read.sequence:
 		return "polyG"
 	return None
+
+def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file):
+	'''
+	'''
+	wh1 = open(fastq1ok_file)
+	wh2 = open(fastq2ok_file)
+	se = open(fastq_se_file)
+	bad = open(fastq_bad_file)
+
+	reader1 = fastq_reader(fastq1_file)
+	reader2 = fastq_reader(fastq2_file)
+
+	while True:
+		try:
+			read1 = next(reader1)
+		except StopIteration:
+			try:
+				read2 = next(reader2)
+			except StopIteration:
+				break
+				pass
+			raise Exception("Not equal number of reads in runs") 
+			break
+		error1 = is_bad_read(read1)
+		error2 = is_bad_read(read2)
+		if not error1 and not error2:
+			wh1.write(read1.fastq)
+			wh2.write(read2.fastq)
+			continue
+		if error1:
+			bad.write(read1.fastq_with_error(error1))
+		else:
+			se.write(read1.fastq)
+		if error2:
+			bad.write(read2.fastq_with_error(error2))
+		else:
+			se.write(read2.fastq)
+
+	wh1.close()
+	wh2.close()
+	se.close()
+	bad.close()
 
 def separate_reads_witn_n_and_sharps(fastq_file, output_file, reads_with_n_file, reads_with_sharp_file):
 	''' Separate reads from fastq file witn N and sharp quality scores.
