@@ -44,6 +44,11 @@ def main(input_file, output_file):
 	D = compute_histogram(input_file)
 	compute_kmers_freq(D, output_file)
 
+def draw_coverage_plot(input_file):
+	''' Draw plot of k-mer based coverage. 
+	'''
+	raise NotImplemented
+
 if __name__ == '__main__':
 
 	if len(sys.argv) != 3:
