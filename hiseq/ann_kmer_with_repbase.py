@@ -16,8 +16,6 @@ def kmer_to_repbase_with_mongo(kmer_file):
 	client = MongoClient('mongodb://localhost:27017/')
 	db = client.Repbase
 
-	file_name = "/home/bioinf/htdocs/public/female.seal.log"
-
 	index = db.MainIndex
 	name_index = db.NameIndex
 
@@ -44,3 +42,10 @@ def kmer_to_repbase_with_mongo(kmer_file):
 				print "\t", name, tf
 		else:
 			print "\t???"
+
+if __name__ == '__main__':
+	if len(sys.argv) != 2:
+		print "Usage: program_name.py kmer_file > annotation_file.txt"
+		exit(0)
+    kmer_file = sys.argv[1]
+    kmer_to_repbase_with_mongo(kmer_file)
