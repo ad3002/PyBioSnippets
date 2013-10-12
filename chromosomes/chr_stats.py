@@ -18,3 +18,8 @@ def get_chromosome_lengths(rerence_multifasta):
         chrs[seq_obj.seq_gi] = seq_obj.seq_length 
         chrs[seq_obj.seq_gi] = seq_obj.seq_length
     print chrs
+
+def split_scaffolds_into_contigs(scaffolds_file, contigs_file):
+    ''' Split and write contigs file from scaffolds_file.
+    '''
+    raise NotImplemented
