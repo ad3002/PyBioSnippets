@@ -14,7 +14,7 @@ if __name__ == '__main__':
 		exit(0)
 	verbose = False
 	if len(sys.argv) == 3:
-		verbose = bool(sys.argv[2])
+		verbose = True
 	prefix = sys.argv[1]
 	fastq1_file = "%s_R1.fastq" % prefix
 	fastq2_file = "%s_R2.fastq" % prefix
