@@ -26,7 +26,7 @@ def is_bad_read(read):
 	1. Presence of unknown nucelotides.
 	2. Presence of 0 quality nucelotides.
 	3. Presence of polyC tracks.
-	4. Presence of polyC tracks.
+	4. Presence of polyG tracks.
 	'''
 	if "n" in read.sequence:
 		return "N"
