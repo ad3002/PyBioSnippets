@@ -10,13 +10,14 @@ from PyBioSnippets.hiseq.fastq_tools import clean_pair_reads_data
 
 if __name__ == '__main__':
 	if len(sys.argv) != 7:
-		print "Usage: name.py fastq1_file fastq2_file fastq1ok_file fastq2ok_file fastq_se_file fastq_bad_file"
+		print "Usage: name.py pair_prefix"
 		exit(0)
 	else:
-		fastq1_file = sys.argv[1]
-		fastq2_file = sys.argv[2]
-		fastq1ok_file = sys.argv[3]
-		fastq2ok_file = sys.argv[4]
-		fastq_se_file  = sys.argv[5]
-		fastq_bad_file  = sys.argv[6]
+		prefix = sys.argv[1]
+		fastq1_file = "%s_R1.fastq" % prefix
+		fastq2_file = "%s_R2.fastq" % prefix
+		fastq1ok_file = "%s_R1.ok.fastq" % prefix
+		fastq2ok_file = "%s_R1.ok.fastq" % prefix
+		fastq_se_file  = "%s.se.fastq" % prefix
+		fastq_bad_file  = "%s.bad.fastq" % prefix
 	clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file)
