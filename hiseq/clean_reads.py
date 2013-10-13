@@ -7,13 +7,15 @@
 
 from PyBioSnippets.hiseq.fastq_tools import separate_reads_witn_n_and_sharps
 
-separate_reads_witn_n_and_sharps(fastq_file, output_file, reads_with_n_file, reads_with_sharp_file)
-
 if __name__ == '__main__':
-	if len(sys.argv) != 3:
-		print "Usage: name.py input_folder mask"
+	if len(sys.argv) != 7:
+		print "Usage: name.py fastq1_file fastq2_file fastq1ok_file fastq2ok_file fastq_se_file fastq_bad_file"
 		exit(0)
 	else:
-		folder = sys.argv[1]
-		mask = sys.argv[2]
-	join_hiseq_files(folder, mask)
+		fastq1_file = sys.argv[1]
+		fastq2_file = sys.argv[2]
+		fastq1ok_file = sys.argv[3]
+		fastq2ok_file = sys.argv[4]
+		fastq_se_file  = sys.argv[5]
+		fastq_bad_file  = sys.argv[6]
+	clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file)
