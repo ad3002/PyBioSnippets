@@ -5,6 +5,7 @@
 #@author: Aleksey Komissarov
 #@contact: ad3002@gmail.com
 
+import sys
 from PyBioSnippets.hiseq.fastq_tools import separate_reads_witn_n_and_sharps
 
 if __name__ == '__main__':
