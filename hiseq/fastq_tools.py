@@ -39,7 +39,7 @@ def is_bad_read(read):
 	return None
 
 def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file):
-	'''
+	''' Remove reads containing N, # quality, polyG/polyC tracks.
 	'''
 	wh1 = open(fastq1ok_file, "w")
 	wh2 = open(fastq2ok_file, "w")
