@@ -6,7 +6,7 @@
 #@contact: ad3002@gmail.com
 
 import sys
-from PyBioSnippets.hiseq.fastq_tools import separate_reads_witn_n_and_sharps
+from PyBioSnippets.hiseq.fastq_tools import clean_pair_reads_data
 
 if __name__ == '__main__':
 	if len(sys.argv) != 7:
