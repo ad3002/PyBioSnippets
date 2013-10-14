@@ -13,7 +13,7 @@ import sys
 import re
 from collections import defaultdict
 
-def join_hiseq_files(folder, mask):
+def join_hiseq_files(folder, mask, remove=False):
 	'''
 	'''
 	join_groups = defaultdict(list)
@@ -30,6 +30,10 @@ def join_hiseq_files(folder, mask):
 		command = "cat %s > %s" % (input_data, output_file)
 		print command
 		os.system(command)
+		if remove:
+			command = "rm %s" input_data
+			print command
+			os.system(command)
 
 if __name__ == '__main__':
 	if len(sys.argv) != 3:
