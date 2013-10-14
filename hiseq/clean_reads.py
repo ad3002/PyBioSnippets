@@ -9,7 +9,7 @@ import sys
 from PyBioSnippets.hiseq.fastq_tools import clean_pair_reads_data
 
 if __name__ == '__main__':
-	if len(sys.argv) not in [3, 2, 4]:
+	if len(sys.argv) not in [3, 2]:
 		print "Usage: name.py pair_prefix [verbose]"
 		exit(0)
 	verbose = False
