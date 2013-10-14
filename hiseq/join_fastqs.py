@@ -12,6 +12,7 @@ import os
 import sys
 import re
 from collections import defaultdict
+import argparse
 
 def join_hiseq_files(folder, mask, remove=False):
 	'''
@@ -36,10 +37,10 @@ def join_hiseq_files(folder, mask, remove=False):
 			os.system(command)
 
 if __name__ == '__main__':
-	if len(sys.argv) != 3:
-		print "Usage: name.py input_folder mask"
-		exit(0)
-	else:
-		folder = sys.argv[1]
-		mask = sys.argv[2]
-	join_hiseq_files(folder, mask)
+	
+	parser = argparse.ArgumentParser(description='Join splitted fastq files.')
+	parser.add_argument('-r','--remove', help='Remove files after joining', required=False)
+	parser.add_argument('-i','--input', help='Input folder', required=True)
+	parser.add_argument('-m','--mask', help='File mask', required=True)
+	args = vars(parser.parse_args())
+	join_hiseq_files(args["input"], args["mask"], remove=args["remove"])
