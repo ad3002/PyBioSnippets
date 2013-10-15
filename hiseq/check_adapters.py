@@ -14,6 +14,7 @@ from collections import defaultdict
 import argparse
 import cPickle
 from trseeker.tools.sequence_tools import get_revcomp
+from trseeker.seqio.tab_file import sc_read_simple_tab_file
 
 def check_adapters(settings):
 	'''
