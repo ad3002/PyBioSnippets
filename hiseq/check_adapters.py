@@ -19,10 +19,11 @@ from trseeker.seqio.tab_file import sc_read_simple_tab_file
 def check_adapters(settings):
 	'''
 	'''
-	print "Load library"
+	print "Load library for key=", settings["k"]
 	with open(settings["pickle_libraries_file"]) as fh:
 		library = cPickle.load(fh)
 	library = library[settings["k"]]
+	assert len(library.keys()[0]) == settings["k"]
 	print "Iter over kmers"
 	for i, d in enumerate(sc_read_simple_tab_file(settings["fastq_file"])):
 		(kmer, tf) = d
@@ -43,5 +44,5 @@ if __name__ == '__main__':
 	parser.add_argument('-k','--k', help='K for kmers', required=False, default=23)
 	args = vars(parser.parse_args())
 	settings["fastq_file"] = args["input"] 
-	settings["k"] = args["k"] 
+	settings["k"] = int(args["k"])
 	check_adapters(settings)
