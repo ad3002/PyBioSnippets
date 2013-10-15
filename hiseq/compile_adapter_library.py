@@ -15,7 +15,7 @@ settings = {
 }
 
 def create_conatmination_lib(settings):
-	'''
+	''' Compute pickled dictionary with conatamination kmers.
 	'''
 	fasta_file = settings["illumina_adapters_file"]
 	output_file = settings["pickle_libraries_file"]
