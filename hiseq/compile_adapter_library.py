@@ -6,7 +6,6 @@
 #@contact: ad3002@gmail.com
 
 from trseeker.tools.ngrams_tools import compute_kmers_libraries_from_fasta
-from trseeker.seqio.fasta_file import sc_iter_fasta
 import cPickle
 
 settings = {
