@@ -27,6 +27,7 @@ def check_adapters(settings):
 	print "Iter over kmers"
 	for i, d in enumerate(sc_read_simple_tab_file(settings["fastq_file"])):
 		(kmer, tf) = d
+		kmer = kmer.lower()
 		print i, kmer, tf, "\r",
 		rkmer = get_revcomp(kmer)
 		if kmer in library or rkmer in library:
