@@ -24,4 +24,6 @@ def create_conatmination_lib(settings):
 	with open(output_file, "w") as fh:
 		cPickle.dump(libraies, fh)
 
-
+if __name__ == '__main__':
+	
+	create_conatmination_lib(settings)
