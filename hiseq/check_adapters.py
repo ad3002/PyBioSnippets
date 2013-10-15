@@ -24,10 +24,12 @@ def check_adapters(settings):
 		library = cPickle.load(fh)
 	library = library[settings["k"]]
 	print "Iter over kmers"
-	for d in sc_read_simple_tab_file(settings["fastq_file"]):
+	for i, d in enumerate(sc_read_simple_tab_file(settings["fastq_file"])):
 		(kmer, tf) = d
+		print i, d, tf, "\r",
 		rkmer = get_revcomp(kmer)
 		if kmer in library or rkmer in library:
+			print
 			print kmer, tf, library[kmer]
 
 if __name__ == '__main__':
