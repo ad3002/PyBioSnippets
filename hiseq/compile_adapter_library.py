@@ -25,5 +25,5 @@ def create_conatmination_lib(settings):
 		cPickle.dump(libraies, fh)
 
 if __name__ == '__main__':
-	
+
 	create_conatmination_lib(settings)
