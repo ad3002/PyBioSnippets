@@ -21,7 +21,25 @@ python parallel_trf.py ~/human_genome/fasta ~/human_genome/trf fa 20
 Compute and draw distribution of PE fragment lengths:
 
 ```bash
-python fragments_length_from_sam.py -o image_file -i sam_fiel
+python fragments_length_from_sam.py -o image_file -i sam_file
+```
+
+## Functions related to SAM file
+
+Count unmapped reads:
+
+```python
+from PyBioSnippets.sam.sam_functions import count_unmapped
+
+(mapped, unmapped) = count_unmapped(sam_file)
+```
+
+Save unmapped reads from SAM file to fasta file:
+
+```python
+from PyBioSnippets.sam.sam_functions import save_unmapped_to_fasta
+
+save_unmapped_to_fasta(sam_file, fasta_file)
 ```
 
 ## Kmers analysis
