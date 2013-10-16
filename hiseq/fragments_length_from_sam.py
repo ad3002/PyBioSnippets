@@ -6,13 +6,15 @@
 #@contact: ad3002@gmail.com 
 
 from trseeker.seqio.sam_file import sc_sam_reader
+from collections import defaultdict
 
 def main(settings):
     '''
     '''
     sam_file = settings["sam_file"]
+    lengths = defaultdict(int)
     for sam_obj in sc_sam_reader(sam_file):
-        print sam_obj.fragment_length
+         lengths[sam_obj.fragment_length] += 1
 
 if __name__ == '__main__':
     main(settings)
