@@ -8,7 +8,7 @@
 from trseeker.seqio.sam_file import sc_sam_reader
 from collections import defaultdict
 
-def main(settings):
+def compute_fragments_statistics(settings):
     '''
     '''
     sam_file = settings["sam_file"]
@@ -17,4 +17,4 @@ def main(settings):
          lengths[sam_obj.fragment_length] += 1
 
 if __name__ == '__main__':
-    main(settings)
+    compute_fragments_statistics(settings)
