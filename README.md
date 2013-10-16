@@ -16,6 +16,14 @@ Example:
 python parallel_trf.py ~/human_genome/fasta ~/human_genome/trf fa 20
 ```
 
+## Illumina run statistics
+
+Compute and draw distribution of PE fragment lengths:
+
+```bash
+python fragments_length_from_sam.py -o image_file -i sam_fiel
+```
+
 ## Kmers analysis
 
 Compute kmer frequences percents for coverage plot.
