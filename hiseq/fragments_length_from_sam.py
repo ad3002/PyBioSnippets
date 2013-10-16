@@ -7,3 +7,12 @@
 
 from trseeker.seqio.sam_file import sc_sam_reader
 
+def main(settings):
+    '''
+    '''
+    sam_file = settings["sam_file"]
+    for sam_obj in sc_sam_reader(sam_file):
+        print sam_obj.fragment_length
+
+if __name__ == '__main__':
+    main(settings)
