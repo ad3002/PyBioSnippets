@@ -2,6 +2,20 @@
 
 ## Data scrapping
 
+## Tandem repeats search with TRF
+
+Search tandem repeats in given folder with fasta files:
+
+```bash
+python parallel_trf.py input_folder output_folder mask threads
+```
+
+Example:
+
+```bash
+python parallel_trf.py ~/human_genome/fasta ~/human_genome/trf fa 20
+```
+
 ## Kmers analysis
 
 Compute kmer frequences percents for coverage plot.
