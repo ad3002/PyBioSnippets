@@ -32,7 +32,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Compute fragments from SAM file.')
     parser.add_argument('-o','--ouput', help='Output image', required=True)
     parser.add_argument('-i','--input', help='Input SAM file', required=True)
-    parser.add_argument('-l','--limit', help='Only first l lines', required=False, default=None)
+    parser.add_argument('-l','--limit', help='Only first l lines', required=False, default=0, type=int)
     args = vars(parser.parse_args())
     settings = {
         "sam_file": args["input"],
