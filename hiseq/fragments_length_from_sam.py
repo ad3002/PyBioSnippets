@@ -19,7 +19,7 @@ def compute_fragments_statistics(settings, limit=None):
     print "Process SAM file..."
     for i, sam_obj in enumerate(sc_sam_reader(sam_file)):
         print i, "\r",
-        if limit and i > 2000000:
+        if limit and i > limit:
             break
         lengths[sam_obj.fragment_length] += 1
     print "Write image to %s" % image_file
