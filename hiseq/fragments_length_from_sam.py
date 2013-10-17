@@ -19,7 +19,8 @@ def compute_fragments_statistics(settings):
     print "Process SAM file..."
     for i, sam_obj in enumerate(sc_sam_reader(sam_file)):
         print i, "\r",
-        lengths[sam_obj.fragment_length] += 1
+        if i > 2000000:
+            lengths[sam_obj.fragment_length] += 1
     print "Write image to %s" % image_file
     draw_distribution_plot(lengths, image_file)
 
