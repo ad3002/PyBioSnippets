@@ -16,7 +16,10 @@ def compute_fragments_statistics(settings, limit=None):
     sam_file = settings["sam_file"]
     image_file = settings["image_file"]
     lengths = defaultdict(int)
-    print "Process SAM file..."
+    if not limit:
+        print "Process full SAM file..."
+    else:
+        print "Process %s lines from SAM file..." % limit
     for i, sam_obj in enumerate(sc_sam_reader(sam_file)):
         print i, "\r",
         if limit and i > limit:
