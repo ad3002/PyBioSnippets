@@ -29,6 +29,10 @@ def compute_fragments_statistics(settings, limit=None):
             lengths[sam_obj.fragment_length] += 1
         else:
             zeros += 1
+    keys = lengths.keys()
+    keys.sort()
+    for k in keys:
+        print k, lengths[k], round(100.*lengths[k]/i, 3)
     print "Write image to %s" % image_file
     draw_distribution_plot(lengths, image_file)
     print "Fragments of zero length: %s" % zeros
