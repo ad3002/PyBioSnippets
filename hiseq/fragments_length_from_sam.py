@@ -10,7 +10,7 @@ from collections import defaultdict
 from trseeker.tools.draw_tools import draw_distribution_plot
 import argparse
 
-def compute_fragments_statistics(settings):
+def compute_fragments_statistics(settings, limit=None):
     '''
     '''
     sam_file = settings["sam_file"]
@@ -19,8 +19,9 @@ def compute_fragments_statistics(settings):
     print "Process SAM file..."
     for i, sam_obj in enumerate(sc_sam_reader(sam_file)):
         print i, "\r",
-        if i > 2000000:
-            lengths[sam_obj.fragment_length] += 1
+        if limit and i > 2000000:
+            break
+        lengths[sam_obj.fragment_length] += 1
     print "Write image to %s" % image_file
     draw_distribution_plot(lengths, image_file)
 
@@ -28,9 +29,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Compute fragments from SAM file.')
     parser.add_argument('-o','--ouput', help='Output image', required=True)
     parser.add_argument('-i','--input', help='Input SAM file', required=True)
+    parser.add_argument('-l','--limit', help='Only first l lines', required=False, default=None)
     args = vars(parser.parse_args())
     settings = {
         "sam_file": args["input"],
         "image_file": args["ouput"],
     }
-    compute_fragments_statistics(settings)
+    compute_fragments_statistics(settings, limit=args["limit"])
