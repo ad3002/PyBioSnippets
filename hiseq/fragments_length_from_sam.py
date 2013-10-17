@@ -25,8 +25,8 @@ def compute_fragments_statistics(settings, limit=None):
         print i, "\r",
         if limit and i > limit:
             break
-        if sam_obj.fragment_length > 0:
-            lengths[sam_obj.fragment_length] += 1
+        if sam_obj.TLEN > 0:
+            lengths[sam_obj.TLEN] += 1
         else:
             zeros += 1
     keys = lengths.keys()
