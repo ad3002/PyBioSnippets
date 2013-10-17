@@ -16,6 +16,7 @@ def compute_fragments_statistics(settings, limit=None):
     sam_file = settings["sam_file"]
     image_file = settings["image_file"]
     lengths = defaultdict(int)
+    zeros = 0
     if not limit:
         print "Process full SAM file..."
     else:
@@ -24,9 +25,13 @@ def compute_fragments_statistics(settings, limit=None):
         print i, "\r",
         if limit and i > limit:
             break
-        lengths[sam_obj.fragment_length] += 1
+        if sam_obj.fragment_length > 0:
+            lengths[sam_obj.fragment_length] += 1
+        else:
+            zeros += 1
     print "Write image to %s" % image_file
     draw_distribution_plot(lengths, image_file)
+    print "Fragments of zero length: %s" % zeros
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Compute fragments from SAM file.')
