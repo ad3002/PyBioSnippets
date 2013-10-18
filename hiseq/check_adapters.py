@@ -30,11 +30,13 @@ def check_adapters(settings):
 		(kmer, tf) = d
 		kmer = kmer.lower()
 		print i, kmer, tf, "\r",
+		if settings["cutoff"] and int(tf) > settings["cutoff"]:
+			break
 		rkmer = get_revcomp(kmer)
 		if kmer in library or rkmer in library:
 			print
 			print kmer, tf, library[kmer]
-			contaminated_kmers[kmer] = library[kmer]
+			contaminated_kmers[kmer] = (tf, library[kmer])
 	contaminated_kmers = contaminated_kmers.items()
 	contaminated_kmers.sort(key=lambda x: x[1], reverse=True)
 	print "Save data"
@@ -54,8 +56,11 @@ if __name__ == '__main__':
 	parser.add_argument('-i','--input', help='Input jellyfish dat file', required=True)
 	parser.add_argument('-o','--output', help='Output dat file', required=True)
 	parser.add_argument('-k','--k', help='K for kmers', required=False, default=23)
+	parser.add_argument('-c','--cutoff', help='Maximal tf', required=False, default=None)
+
 	args = vars(parser.parse_args())
 	settings["fastq_file"] = args["input"] 
-	settings["output_file"] = args["output"] 
+	settings["output_file"] = args["output"]
+	settings["cutoff"] = args["cutoff"]
 	settings["k"] = int(args["k"])
 	check_adapters(settings)
