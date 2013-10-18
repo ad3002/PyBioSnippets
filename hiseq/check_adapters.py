@@ -37,6 +37,7 @@ def check_adapters(settings):
 			contaminated_kmers[kmer] = library[kmer]
 	contaminated_kmers = contaminated_kmers.items()
 	contaminated_kmers.sort(key=lambda x: x[1], reverse=True)
+	print "Save data"
 	with open(settings["output_file"], "w") as fh:
 		for (k, v) in contaminated_kmers.items():
 			s = "%s\t%s\n" % (k, v)
