@@ -9,11 +9,11 @@ from trseeker.tools.ngrams_tools import compute_kmers_libraries_from_fasta
 import cPickle
 
 settings = {
-	"illumina_adapters_file": "/home/akomissarov/libs/illumina.fa",
-	"illumina_vectors_file": "/home/akomissarov/libs/illumina_vector.fa",
+	"illumina_adapters_file": "/home/akomissarov/libs/PyBioSnippets/hiseq/illumina.fa",
+	"illumina_vectors_file": "/home/akomissarov/libs/PyBioSnippets/hiseq/illumina_vector.fa",
 	"ks": [13, 23, 31], 
-	"pickle_libraries_file": "/home/akomissarov/libs/illumina.pickle",
-	"pickle_vectors_libraries_file": "/home/akomissarov/libs/illumina_vector.pickle",
+	"pickle_libraries_file": "/home/akomissarov/libs/PyBioSnippets/hiseq/illumina.pickle",
+	"pickle_vectors_libraries_file": "/home/akomissarov/libs/PyBioSnippets/hiseq/illumina_vector.pickle",
 }
 
 def create_conatmination_lib(settings):
