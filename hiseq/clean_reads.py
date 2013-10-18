@@ -14,14 +14,16 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Check presence of adapter kmers.')
 	parser.add_argument('-p','--prefix', help='Pair prefix', required=True)
 	parser.add_argument('-v','--verbose', help='Verbose', required=False, default=False)
+	parser.add_argument('-a','--adapters', help='File with adapters', required=False, default=None)
 	args = vars(parser.parse_args())
 
 	prefix = args["prefix"]
 	verbose = args["verbose"]
+	adapters_file = args["adapters_file"]
 	fastq1_file = "%s1.fastq" % prefix
 	fastq2_file = "%s2.fastq" % prefix
 	fastq1ok_file = "%s1.ok.fastq" % prefix
 	fastq2ok_file = "%s2.ok.fastq" % prefix
 	fastq_se_file  = "%s.se.fastq" % prefix
 	fastq_bad_file  = "%s.bad.fastq" % prefix
-	clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=verbose)
+	clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=verbose, adapters_file=adapters_file)
