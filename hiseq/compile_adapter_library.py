@@ -10,8 +10,10 @@ import cPickle
 
 settings = {
 	"illumina_adapters_file": "/home/akomissarov/libs/illumina.fa",
+	"illumina_vectors_file": "/home/akomissarov/libs/illumina_vector.fa",
 	"ks": [13, 23, 31], 
 	"pickle_libraries_file": "/home/akomissarov/libs/illumina.pickle",
+	"pickle_vectors_libraries_file": "/home/akomissarov/libs/illumina_vector.pickle",
 }
 
 def create_conatmination_lib(settings):
@@ -24,6 +26,12 @@ def create_conatmination_lib(settings):
 	with open(output_file, "w") as fh:
 		cPickle.dump(libraies, fh)
 
-if __name__ == '__main__':
+	fasta_file = settings["illumina_vectors_file"]
+	output_file = settings["pickle_vectors_libraries_file"]
+	k_diaposon = settings["ks"]	
+	libraies = compute_kmers_libraries_from_fasta(fasta_file, k_diaposon)
+	with open(output_file, "w") as fh:
+		cPickle.dump(libraies, fh)
 
+if __name__ == '__main__':
 	create_conatmination_lib(settings)
