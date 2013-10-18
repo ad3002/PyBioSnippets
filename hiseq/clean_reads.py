@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
 	prefix = args["prefix"]
 	verbose = args["verbose"]
-	adapters_file = args["adapters_file"]
+	adapters_file = args["adapters"]
 	fastq1_file = "%s1.fastq" % prefix
 	fastq2_file = "%s2.fastq" % prefix
 	fastq1ok_file = "%s1.ok.fastq" % prefix
