@@ -25,6 +25,7 @@ def check_adapters(settings):
 	library = library[settings["k"]]
 	assert len(library.keys()[0]) == settings["k"]
 	print "Iter over kmers"
+	contaminated_kmers = {}
 	for i, d in enumerate(sc_read_simple_tab_file(settings["fastq_file"])):
 		(kmer, tf) = d
 		kmer = kmer.lower()
@@ -33,17 +34,27 @@ def check_adapters(settings):
 		if kmer in library or rkmer in library:
 			print
 			print kmer, tf, library[kmer]
+			contaminated_kmers[kmer] = library[kmer]
+	contaminated_kmers = contaminated_kmers.items()
+	contaminated_kmers.sort(key=lambda x: x[1], reverse=True)
+	with open(settings["output_file"], "w") as fh:
+		for (k, v) in contaminated_kmers.items():
+			s = "%s\t%s\n" % (k, v)
+			fh.write(s)
+	return contaminated_kmers
 
 if __name__ == '__main__':
 	
 	settings = {
-		"pickle_libraries_file": "/home/akomissarov/libs/illumina.pickle",
+		"pickle_libraries_file": "/home/akomissarov/libs/PyBioSnippets/hiseq/illumina.pickle",
 	}
 
 	parser = argparse.ArgumentParser(description='Check presence of adapter kmers.')
 	parser.add_argument('-i','--input', help='Input jellyfish dat file', required=True)
+	parser.add_argument('-o','--output', help='Output dat file', required=True)
 	parser.add_argument('-k','--k', help='K for kmers', required=False, default=23)
 	args = vars(parser.parse_args())
 	settings["fastq_file"] = args["input"] 
+	settings["output_file"] = args["output"] 
 	settings["k"] = int(args["k"])
 	check_adapters(settings)
