@@ -38,6 +38,34 @@ def is_bad_read(read):
 		return "polyG"
 	return None
 
+def compute_kmer_index(fastq1_file, fastq2_file):
+	'''
+	'''
+	index = {}
+	pass
+
+def iter_pe_data(fastq1_file, fastq2_file):
+	''' Iterate over PE fastq files.
+	'''
+	reader1 = fastq_reader(fastq1_file)
+	reader2 = fastq_reader(fastq2_file)
+	while True:
+		try:
+			read1 = next(reader1)
+		except StopIteration:
+			try:
+				read2 = next(reader2)
+			except StopIteration:
+				break
+				pass
+			raise Exception("Not equal number of reads in PE run") 
+			break
+		try:
+			read2 = next(reader2)
+		except StopIteration:
+			raise Exception("Not equal number of reads in PE run") 
+		yield read1, read2
+
 def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=False, adapters_file=None):
 	''' Remove reads containing N, # quality, polyG/polyC tracks.
 	'''
@@ -45,9 +73,6 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	wh2 = open(fastq2ok_file, "w")
 	se = open(fastq_se_file, "w")
 	bad = open(fastq_bad_file, "w")
-
-	reader1 = fastq_reader(fastq1_file)
-	reader2 = fastq_reader(fastq2_file)
 
 	statistics = {
 		"pe": 0,
@@ -64,22 +89,9 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		with open(adapters_file) as fh:
 			adapters = [x.strip().split()[0] for x in fh.readlines()]
 	print adapters
-	i = 0.
-	while True:
-		try:
-			read1 = next(reader1)
-		except StopIteration:
-			try:
-				read2 = next(reader2)
-			except StopIteration:
-				break
-				pass
-			raise Exception("Not equal number of reads in runs") 
-			break
-		read2 = next(reader2)
-		i += 1
+	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
 		if verbose:
-			print i, statistics["pe"]/i, statistics, "\r",
+			print i, statistics["pe"]/float(i), statistics, "\r",
 		error1 = is_bad_read(read1)
 		error2 = is_bad_read(read2)
 		if not error1 and not error2:
