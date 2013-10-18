@@ -7,15 +7,17 @@
 
 import sys
 from PyBioSnippets.hiseq.fastq_tools import clean_pair_reads_data
+import argparse
 
 if __name__ == '__main__':
-	if len(sys.argv) not in [3, 2]:
-		print "Usage: name.py pair_prefix [verbose]"
-		exit(0)
-	verbose = False
-	if len(sys.argv) == 3:
-		verbose = True
-	prefix = sys.argv[1]
+
+	parser = argparse.ArgumentParser(description='Check presence of adapter kmers.')
+	parser.add_argument('-p','--prefix', help='Pair prefix', required=True)
+	parser.add_argument('-v','--verbose', help='Verbose', required=False, default=False)
+	args = vars(parser.parse_args())
+
+	prefix = args["prefix"]
+	verbose = args["verbose"]
 	fastq1_file = "%s1.fastq" % prefix
 	fastq2_file = "%s2.fastq" % prefix
 	fastq1ok_file = "%s1.ok.fastq" % prefix
