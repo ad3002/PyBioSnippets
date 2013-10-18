@@ -55,8 +55,8 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Check presence of adapter kmers.')
 	parser.add_argument('-i','--input', help='Input jellyfish dat file', required=True)
 	parser.add_argument('-o','--output', help='Output dat file', required=True)
-	parser.add_argument('-k','--k', help='K for kmers', required=False, default=23)
-	parser.add_argument('-c','--cutoff', help='Maximal tf', required=False, default=None)
+	parser.add_argument('-k','--k', help='K for kmers', required=False, default=23, type=int)
+	parser.add_argument('-c','--cutoff', help='Maximal tf', required=False, default=None, type=int)
 
 	args = vars(parser.parse_args())
 	settings["fastq_file"] = args["input"] 
