@@ -30,7 +30,7 @@ def check_adapters(settings):
 		(kmer, tf) = d
 		kmer = kmer.lower()
 		print i, kmer, tf, "\r",
-		if settings["cutoff"] and int(tf) > settings["cutoff"]:
+		if settings["cutoff"] and int(tf) < settings["cutoff"]:
 			break
 		rkmer = get_revcomp(kmer)
 		if kmer in library or rkmer in library:
