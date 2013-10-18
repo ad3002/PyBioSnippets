@@ -38,7 +38,7 @@ def is_bad_read(read):
 		return "polyG"
 	return None
 
-def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=False):
+def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=False, adapters_file=None):
 	''' Remove reads containing N, # quality, polyG/polyC tracks.
 	'''
 	wh1 = open(fastq1ok_file, "w")
@@ -56,8 +56,14 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		"zeroQ": 0,
 		"polyC": 0,
 		"polyG": 0,
+		"adapters": 0,
 	}
 
+	adapters = []
+	if adapters_file:
+		with open(adapters_file) as fh:
+			adapters = [x.strip().split()[0] for x in fh.readlines()]
+	print adapters
 	i = 0.
 	while True:
 		try:
