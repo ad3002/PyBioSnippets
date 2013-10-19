@@ -185,7 +185,7 @@ def fastq_to_fasta(fastq_file, fasta_file):
 	''' Fastq to fasta.
 	'''
 	print "Fastq to fasta..."
-	with open(fastq_file, "w") as fh:
+	with open(fasta_file, "w") as fh:
 		for i, read in enumerate(fastq_reader(fastq_file)):
 			print i, "\r",
 			fh.write(read.fasta)
