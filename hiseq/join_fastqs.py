@@ -44,3 +44,4 @@ if __name__ == '__main__':
 	parser.add_argument('-m','--mask', help='File mask', required=True)
 	args = vars(parser.parse_args())
 	join_hiseq_files(args["input"], args["mask"], remove=args["remove"])
+	
