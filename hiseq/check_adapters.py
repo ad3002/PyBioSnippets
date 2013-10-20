@@ -28,9 +28,10 @@ def check_adapters(settings):
 	contaminated_kmers = {}
 	for i, d in enumerate(sc_read_simple_tab_file(settings["fastq_file"])):
 		(kmer, tf) = d
+		tf = int(tf)
 		kmer = kmer.lower()
 		print i, kmer, tf, "\r",
-		if settings["cutoff"] and int(tf) < settings["cutoff"]:
+		if settings["cutoff"] and tf < settings["cutoff"]:
 			break
 		rkmer = get_revcomp(kmer)
 		if kmer in library or rkmer in library:
