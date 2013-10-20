@@ -62,6 +62,13 @@ Fix too long quality scores in corrupted HiSeq files
 fix_uncorrect_long_quality(fastq_file, corrected_fastq_output)
 ```
 
+Iterator for pair end files:
+
+```python
+for read_obj1, read_obj2 in iter_pe_data(fastq_file1, fastq_file2):
+	do_somethind()
+```
+
 ## Kmers analysis
 
 Compute kmer frequences percents for coverage plot.
