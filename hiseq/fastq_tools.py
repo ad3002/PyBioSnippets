@@ -93,7 +93,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	if adapters_file:
 		with open(adapters_file) as fh:
 			for line in fh.readlines():
-				adap = x.strip().split()[0]
+				adap = line.strip().split()[0]
 				rev_adap = get_revcomp(adap)
 				if not adap in adapters:
 					adapters.append(adap)
