@@ -69,6 +69,12 @@ for read_obj1, read_obj2 in iter_pe_data(fastq_file1, fastq_file2):
 	do_somethind()
 ```
 
+Convert fastq to fasta:
+
+```python
+python hiseq/fastq_to_fasta.py -i data.fastq -o data.fasta
+```
+
 ## Kmers analysis
 
 Compute kmer frequences percents for coverage plot.
