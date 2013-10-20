@@ -21,12 +21,13 @@ def fix_uncorrect_long_quality(fastq_file, corrected_fastq_output):
 				print read.fastq
 			fh.write(read.fastq)
 
-def is_bad_read(read):
+def is_bad_read(read, adapters):
 	''' Check read quality.
 	1. Presence of unknown nucelotides.
 	2. Presence of 0 quality nucelotides.
 	3. Presence of polyC tracks.
 	4. Presence of polyG tracks.
+	5. Presence of adapter fragments.
 	'''
 	if "n" in read.sequence:
 		return "N"
@@ -36,6 +37,9 @@ def is_bad_read(read):
 		return "polyC"
 	if "ggggggggggggggggggggggg" in read.sequence:
 		return "polyG"
+	for adapter in adapters:
+		if adapter in read.sequence:
+			return "adapters"
 	return None
 
 def compute_kmer_index(fastq1_file, fastq2_file):
@@ -89,6 +93,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		with open(adapters_file) as fh:
 			adapters = [x.strip().split()[0] for x in fh.readlines()]
 	print adapters
+
 	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
 		if verbose:
 			print i, statistics["pe"]/float(i), statistics, "\r",
@@ -119,7 +124,6 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	print
 	print statistics
 	return statistics
-
 
 def separate_reads_witn_n_and_sharps(fastq_file, output_file, reads_with_n_file, reads_with_sharp_file):
 	''' Separate reads from fastq file witn N and sharp quality scores.
