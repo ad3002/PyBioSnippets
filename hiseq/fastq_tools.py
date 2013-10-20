@@ -103,7 +103,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 
 	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
 		if verbose:
-			print i, statistics["pe"]/float(i), statistics, "\r",
+			print i, statistics["pe"]/float(i+1), statistics, "\r",
 		error1 = is_bad_read(read1, adapters)
 		error2 = is_bad_read(read2, adapters)
 		if not error1 and not error2:
