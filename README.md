@@ -46,7 +46,9 @@ save_unmapped_to_fasta(sam_file, fasta_file)
 
 Join splitted HiSeq files:
 
-
+```bash
+python hiseq/join_fastq.py --remove False --input some_folder --mask read_L001_R1
+```
 
 ## Kmers analysis
 
