@@ -56,6 +56,12 @@ Join splitted HiSeq files:
 python hiseq/join_fastq.py --remove False --input some_folder --mask read_L001_R1
 ```
 
+Fix too long quality scores in corrupted HiSeq files
+
+```python
+fix_uncorrect_long_quality(fastq_file, corrected_fastq_output)
+```
+
 ## Kmers analysis
 
 Compute kmer frequences percents for coverage plot.
