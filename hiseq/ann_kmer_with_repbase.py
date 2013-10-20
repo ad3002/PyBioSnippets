@@ -9,7 +9,7 @@ from trseeker.seqio.tab_file import sc_read_simple_tab_file
 from trseeker.tools.sequence_tools import get_revcomp
 import pymongo
 from pymongo import MongoClient
-
+import sys
 
 def kmer_to_repbase_with_mongo(kmer_file):
 
