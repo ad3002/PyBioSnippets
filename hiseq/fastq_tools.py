@@ -6,6 +6,7 @@
 #@contact: ad3002@gmail.com
 
 from trseeker.seqio.sra_file import fastq_reader
+from trseeker.tools.sequence_tools import get_revcomp
 
 def fix_uncorrect_long_quality(fastq_file, corrected_fastq_output):
 	''' Fix too long quality scores in corrupted HiSeq files
@@ -91,14 +92,20 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	adapters = []
 	if adapters_file:
 		with open(adapters_file) as fh:
-			adapters = [x.strip().split()[0] for x in fh.readlines()]
-	print adapters
+			for line in fh.readlines():
+				adap = x.strip().split()[0]
+				rev_adap = get_revcomp(adap)
+				if not adap in adapters:
+					adapters.append(adap)
+				if not rev_adap in adapters:
+					adapters.append(rev_adap)
+	print "Number of adapters:", len(adapters)
 
 	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
 		if verbose:
 			print i, statistics["pe"]/float(i), statistics, "\r",
-		error1 = is_bad_read(read1)
-		error2 = is_bad_read(read2)
+		error1 = is_bad_read(read1, adapters)
+		error2 = is_bad_read(read2, adapters)
 		if not error1 and not error2:
 			wh1.write(read1.fastq)
 			wh2.write(read2.fastq)
