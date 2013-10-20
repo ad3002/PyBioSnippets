@@ -42,6 +42,12 @@ from PyBioSnippets.sam.sam_functions import save_unmapped_to_fasta
 save_unmapped_to_fasta(sam_file, fasta_file)
 ```
 
+## Fastq operations
+
+Join splitted HiSeq files:
+
+
+
 ## Kmers analysis
 
 Compute kmer frequences percents for coverage plot.
