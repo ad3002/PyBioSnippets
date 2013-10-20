@@ -48,5 +48,5 @@ if __name__ == '__main__':
 	if len(sys.argv) != 2:
 		print "Usage: program_name.py kmer_file > annotation_file.txt"
 		exit(0)
-    kmer_file = sys.argv[1]
-    kmer_to_repbase_with_mongo(kmer_file)
+	kmer_file = sys.argv[1]
+	kmer_to_repbase_with_mongo(kmer_file)
