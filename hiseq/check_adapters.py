@@ -25,6 +25,7 @@ def check_adapters(settings):
 	library = library[settings["k"]]
 	assert len(library.keys()[0]) == settings["k"]
 	print "Iter over kmers"
+	print "Library size:", len(library.keys())
 	contaminated_kmers = {}
 	for i, d in enumerate(sc_read_simple_tab_file(settings["fastq_file"])):
 		(kmer, tf) = d
