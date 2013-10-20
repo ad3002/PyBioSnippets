@@ -42,6 +42,12 @@ from PyBioSnippets.sam.sam_functions import save_unmapped_to_fasta
 save_unmapped_to_fasta(sam_file, fasta_file)
 ```
 
+Compute fragmnet length statistics for first l lines.
+
+```bash
+python fragments_length_from_sam.py -o stat.png -i data.sam -l 100000
+```
+
 ## Fastq operations
 
 Join splitted HiSeq files:
