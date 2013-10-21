@@ -12,7 +12,7 @@ import argparse
 def main(fastq1_file, fastq2_file):
 	'''
 	'''
-	for i, read1, read2 in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
+	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
 		print read1.head, read2.head
 
 if __name__ == '__main__':
