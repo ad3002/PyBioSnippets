@@ -16,7 +16,7 @@ def main(fastq1_file, fastq2_file):
 		with open(fastq2_file+".temp", "w") as fh2:
 			for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
 				print i, read1.head, read2.head
-				assert read1.split()[0] == read2.split()[0]
+				assert read1.head.split()[0] == read2.head.split()[0]
 				fh1.write(read1.fastq)
 				fh2.write(read2.fastq)
 
