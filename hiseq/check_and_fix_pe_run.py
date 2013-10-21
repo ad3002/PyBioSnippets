@@ -9,7 +9,7 @@ import sys
 from PyBioSnippets.hiseq.fastq_tools import iter_pe_data
 import argparse
 
-def main(file1, file2):
+def main(fastq1_file, fastq2_file):
 	'''
 	'''
 	for read1, read2 in iter_pe_data(fastq1_file, fastq2_file):
