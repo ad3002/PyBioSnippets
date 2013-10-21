@@ -12,8 +12,13 @@ import argparse
 def main(fastq1_file, fastq2_file):
 	'''
 	'''
-	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
-		print read1.head, read2.head
+	with open(fastq1_file+".temp", "w") as fh1:
+		with open(fastq2_file+".temp", "w") as fh2:
+			for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
+				print i, read1.head, read2.head
+				assert read1.split()[0] == read2.split()[0]
+				fh1.write(read1.fastq)
+				fh2.write(read2.fastq)
 
 if __name__ == '__main__':
 	
