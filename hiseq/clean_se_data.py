@@ -23,4 +23,4 @@ if __name__ == '__main__':
 	fastq1_file = "%s.fastq" % prefix
 	fastq1ok_file = "%s.ok.fastq" % prefix
 	fastq_bad_file  = "%s.bad.fastq" % prefix
-	clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=False, adapters_file=None)
+	clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=verbose, adapters_file=adapters_file)

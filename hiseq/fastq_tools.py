@@ -152,7 +152,6 @@ def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=F
 	if adapters_file:
 		with open(adapters_file) as fh:
 			for line in fh:
-				print line
 				adap = line.strip().split()[0]
 				rev_adap = get_revcomp(adap)
 				if not adap in adapters:
