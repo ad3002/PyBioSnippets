@@ -75,6 +75,67 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	''' Remove reads containing N, # quality, polyG/polyC tracks and adapters.
 	'''
 	wh1 = open(fastq1ok_file, "w")
+	wh2 = open(fastq2ok_file, "w")
+	se = open(fastq_se_file, "w")
+	bad = open(fastq_bad_file, "w")
+
+	statistics = {
+		"pe": 0,
+		"se": 0,
+		"N": 0,
+		"zeroQ": 0,
+		"polyC": 0,
+		"polyG": 0,
+		"adapters": 0,
+	}
+
+	adapters = []
+	if adapters_file:
+		with open(adapters_file) as fh:
+			for line in fh.readlines():
+				adap = line.strip().split()[0]
+				rev_adap = get_revcomp(adap)
+				if not adap in adapters:
+					adapters.append(adap)
+				if not rev_adap in adapters:
+					adapters.append(rev_adap)
+	print "Number of adapters:", len(adapters)
+
+	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
+		if verbose:
+			print i, statistics["pe"]/float(i+1), statistics, "\r",
+		error1 = is_bad_read(read1, adapters)
+		error2 = is_bad_read(read2, adapters)
+		if not error1 and not error2:
+			wh1.write(read1.fastq)
+			wh2.write(read2.fastq)
+			statistics["pe"] += 1
+			continue
+		if error1:
+			bad.write(read1.fastq_with_error(error1))
+			statistics[error1] += 1
+		else:
+			se.write(read1.fastq)
+			statistics["se"] += 1
+		if error2:
+			bad.write(read2.fastq_with_error(error2))
+			statistics[error2] += 1
+		else:
+			se.write(read2.fastq)
+			statistics["se"] += 1
+			
+	wh1.close()
+	wh2.close()
+	se.close()
+	bad.close()
+	print
+	print statistics
+	return statistics
+
+def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=False, adapters_file=None):
+	''' Remove reads containing N, # quality, polyG/polyC tracks and adapters.
+	'''
+	wh1 = open(fastq1ok_file, "w")
 	se = open(fastq_se_file, "w")
 	bad = open(fastq_bad_file, "w")
 
@@ -101,12 +162,6 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	print "Number of adapters:", len(adapters)
 
 	
-
-def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=False, adapters_file=None):
-	''' Remove reads containing N, # quality, polyG/polyC tracks and adapters.
-	'''
-	pass
-
 def separate_reads_witn_n_and_sharps(fastq_file, output_file, reads_with_n_file, reads_with_sharp_file):
 	''' Separate reads from fastq file witn N and sharp quality scores.
 	'''
