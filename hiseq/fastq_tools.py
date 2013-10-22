@@ -151,13 +151,16 @@ def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=F
 	adapters = []
 	if adapters_file:
 		with open(adapters_file) as fh:
-			for line in fh.readlines():
+			for line in fh:
+				print line
 				adap = line.strip().split()[0]
 				rev_adap = get_revcomp(adap)
 				if not adap in adapters:
 					adapters.append(adap)
 				if not rev_adap in adapters:
 					adapters.append(rev_adap)
+	else:
+		print "Adapter file missing"
 	print "Number of adapters:", len(adapters)
 
 	for i, read1 in enumerate(fastq_reader(fastq1_file)):
