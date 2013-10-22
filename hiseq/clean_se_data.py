@@ -6,7 +6,7 @@
 #@contact: ad3002@gmail.com
 
 import sys
-from PyBioSnippets.hiseq.fastq_tools import clean_pair_reads_data
+from PyBioSnippets.hiseq.fastq_tools import clean_single_read_data
 import argparse
 
 if __name__ == '__main__':
