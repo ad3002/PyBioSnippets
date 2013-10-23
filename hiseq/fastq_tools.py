@@ -71,6 +71,26 @@ def iter_pe_data(fastq1_file, fastq2_file):
 			raise Exception("Not equal number of reads in PE run") 
 		yield read1, read2
 
+def clean_short_reads(fastq1_file, fastq1ok_file, fastq_short_file, cutoff, verbose=verbose):
+	''' Remove short reads from fastq file.
+	'''
+	statistics = {
+		"short": 0,
+		"ok": 0,
+		"fraction": 0.0,
+	}
+	
+	for i, read1 in enumerate(fastq_reader(fastq1_file)):
+		if verbose:
+			print i, statistics["se"]/float(i+1), statistics, "\r",
+		error1 = is_bad_read(read1, adapters)
+		if error1:
+			bad.write(read1.fastq_with_error(error1))
+			statistics[error1] += 1
+		else:
+			wh1.write(read1.fastq)
+			statistics["se"] += 1
+
 def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=False, adapters_file=None):
 	''' Remove reads containing N, # quality, polyG/polyC tracks and adapters.
 	'''
