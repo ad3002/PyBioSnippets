@@ -51,7 +51,7 @@ def check_adapters(settings):
 if __name__ == '__main__':
 	
 	settings = {
-		"pickle_libraries_file": "/home/akomissarov/libs/PyBioSnippets/hiseq/illumina.pickle",
+		"pickle_libraries_file": "/home/akomissarov/Dropbox/PyBioSnippets/hiseq/illumina.pickle",
 	}
 
 	parser = argparse.ArgumentParser(description='Check presence of adapter kmers.')
