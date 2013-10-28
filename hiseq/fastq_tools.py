@@ -113,6 +113,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		"adapters": 0,
 	}
 	if cutoff:
+		cutoff = int(cutoff)
 		cutoff_key = "length%s" % cutoff
 		statistics[cutoff_key] = 0
 
@@ -129,6 +130,8 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	print "Number of adapters:", len(adapters)
 
 	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
+		error1 = None
+		error2 = None
 		if verbose:
 			print i, statistics["pe"]/float(i+1), statistics, "\r",
 		if cutoff:
