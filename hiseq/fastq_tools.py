@@ -95,7 +95,7 @@ def clean_short_reads(fastq1_file, fastq1ok_file, fastq_short_file, cutoff, verb
 	return statistics
 
 
-def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=False, adapters_file=None):
+def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=False, adapters_file=None, cutoff=None):
 	''' Remove reads containing N, # quality, polyG/polyC tracks and adapters.
 	'''
 	wh1 = open(fastq1ok_file, "w")
@@ -112,6 +112,9 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		"polyG": 0,
 		"adapters": 0,
 	}
+	if cutoff:
+		cutoff_key = "length%s" % cutoff
+		statistics[cutoff_key] = 0
 
 	adapters = []
 	if adapters_file:
@@ -128,8 +131,14 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	for i, (read1, read2) in enumerate(iter_pe_data(fastq1_file, fastq2_file)):
 		if verbose:
 			print i, statistics["pe"]/float(i+1), statistics, "\r",
-		error1 = is_bad_read(read1, adapters)
-		error2 = is_bad_read(read2, adapters)
+		if cutoff:
+			if read1.length < cutoff:
+				error1 = cutoff_key
+			if read2.length < cutoff:
+				error2 = cutoff_key
+		if not (error1 or error1):
+			error1 = is_bad_read(read1, adapters)
+			error2 = is_bad_read(read2, adapters)
 		if not error1 and not error2:
 			wh1.write(read1.fastq)
 			wh2.write(read2.fastq)
