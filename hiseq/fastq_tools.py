@@ -168,7 +168,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	print statistics
 	return statistics
 
-def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=False, adapters_file=None):
+def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=False, adapters_file=None, cutoff=None):
 	''' Remove reads containing N, # quality, polyG/polyC tracks and adapters.
 	'''
 	wh1 = open(fastq1ok_file, "w")
@@ -184,6 +184,13 @@ def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=F
 		"adapters": 0,
 	}
 
+	if cutoff:
+		cutoff = int(cutoff)
+		cutoff_key = "length%s" % cutoff
+		statistics[cutoff_key] = 0
+
+
+	print "Load adapters file"
 	adapters = []
 	if adapters_file:
 		with open(adapters_file) as fh:
@@ -199,9 +206,14 @@ def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=F
 	print "Number of adapters:", len(adapters)
 
 	for i, read1 in enumerate(fastq_reader(fastq1_file)):
+		error1 = None
 		if verbose:
 			print i, statistics["se"]/float(i+1), statistics, "\r",
-		error1 = is_bad_read(read1, adapters)
+		if cutoff:
+			if read1.length < cutoff:
+				error1 = cutoff_key
+		if not error1:
+			error1 = is_bad_read(read1, adapters)
 		if error1:
 			bad.write(read1.fastq_with_error(error1))
 			statistics[error1] += 1
