@@ -22,7 +22,7 @@ def fix_uncorrect_long_quality(fastq_file, corrected_fastq_output):
 				print read.fastq
 			fh.write(read.fastq)
 
-def is_bad_read(read, adapters):
+def is_bad_read(read, adapters, polyG_cutoff):
 	''' Check read quality.
 	1. Presence of unknown nucelotides.
 	2. Presence of 0 quality nucelotides.
@@ -34,9 +34,9 @@ def is_bad_read(read, adapters):
 		return "N"
 	if "#" in read.qual:
 		return "zeroQ"
-	if "ccccccccccccccccccccccc" in read.sequence:
+	if "c"*polyG_cutoff in read.sequence:
 		return "polyC"
-	if "ggggggggggggggggggggggg" in read.sequence:
+	if "g"*polyG_cutoff in read.sequence:
 		return "polyG"
 	for adapter in adapters:
 		if adapter in read.sequence:
@@ -95,7 +95,7 @@ def clean_short_reads(fastq1_file, fastq1ok_file, fastq_short_file, cutoff, verb
 	return statistics
 
 
-def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=False, adapters_file=None, cutoff=None):
+def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file, fastq_se_file, fastq_bad_file, verbose=False, adapters_file=None, cutoff=None, polyG_cutoff=23):
 	''' Remove reads containing N, # quality, polyG/polyC tracks and adapters.
 	'''
 	wh1 = open(fastq1ok_file, "w")
@@ -140,8 +140,8 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 			if read2.length < cutoff:
 				error2 = cutoff_key
 		if not (error1 or error1):
-			error1 = is_bad_read(read1, adapters)
-			error2 = is_bad_read(read2, adapters)
+			error1 = is_bad_read(read1, adapters, polyG_cutoff)
+			error2 = is_bad_read(read2, adapters, polyG_cutoff)
 		if not error1 and not error2:
 			wh1.write(read1.fastq)
 			wh2.write(read2.fastq)
@@ -164,11 +164,13 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 	wh2.close()
 	se.close()
 	bad.close()
+	if i > 0:
+		statistics["fraction"] = statistics["pe"]/float(i)
 	print
 	print statistics
 	return statistics
 
-def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=False, adapters_file=None, cutoff=None):
+def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=False, adapters_file=None, cutoff=None, polyG_cutoff=23):
 	''' Remove reads containing N, # quality, polyG/polyC tracks and adapters.
 	'''
 	wh1 = open(fastq1ok_file, "w")
@@ -213,7 +215,7 @@ def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=F
 			if read1.length < cutoff:
 				error1 = cutoff_key
 		if not error1:
-			error1 = is_bad_read(read1, adapters)
+			error1 = is_bad_read(read1, adapters, polyG_cutoff)
 		if error1:
 			bad.write(read1.fastq_with_error(error1))
 			statistics[error1] += 1
@@ -223,6 +225,8 @@ def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=F
 			
 	wh1.close()
 	bad.close()
+	if i > 0:
+		statistics["fraction"] = statistics["pe"]/float(i)
 	print
 	print statistics
 	return statistics
