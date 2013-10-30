@@ -35,9 +35,9 @@ def is_bad_read(read, adapters, polyG_cutoff):
 	if "#" in read.qual:
 		return "zeroQ"
 	if "c"*polyG_cutoff in read.sequence:
-		return "polyC"
+		return "polyC%s" % polyG_cutoff
 	if "g"*polyG_cutoff in read.sequence:
-		return "polyG"
+		return "polyG%s" % polyG_cutoff
 	for adapter in adapters:
 		if adapter in read.sequence:
 			return "adapters"
@@ -108,8 +108,8 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		"se": 0,
 		"N": 0,
 		"zeroQ": 0,
-		"polyC": 0,
-		"polyG": 0,
+		"polyC%s" % polyG_cutoff: 0,
+		"polyG%s" % polyG_cutoff: 0,
 		"adapters": 0,
 	}
 	if cutoff:
@@ -181,8 +181,8 @@ def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=F
 		"se": 0,
 		"N": 0,
 		"zeroQ": 0,
-		"polyC": 0,
-		"polyG": 0,
+		"polyC%s" % polyG_cutoff: 0,
+		"polyG%s" % polyG_cutoff: 0,
 		"adapters": 0,
 	}
 
