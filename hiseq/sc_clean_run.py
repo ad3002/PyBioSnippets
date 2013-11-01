@@ -6,9 +6,10 @@
 #@contact: ad3002@gmail.com
 '''
 '''
+import sys
+sys.path.append("/home/akomissarov/Dropbox")
 
 import os
-import sys
 import re
 from collections import defaultdict
 import argparse
