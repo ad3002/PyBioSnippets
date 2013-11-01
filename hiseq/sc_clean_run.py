@@ -17,6 +17,12 @@ from trseeker.tools.sequence_tools import get_revcomp
 from trseeker.seqio.tab_file import sc_read_simple_tab_file
 
 
+def clean_se_run(settings):
+	'''
+	'''
+	pass
+
+
 if __name__ == '__main__':
 	
 	settings = {
@@ -32,4 +38,4 @@ if __name__ == '__main__':
 	settings["fastq_file"] = args["input"] 
 	settings["output_file"] = args["output"]
 	settings["output_bad_file"] = args["bad"]
-	check_adapters(settings)
+	clean_se_run(settings)
