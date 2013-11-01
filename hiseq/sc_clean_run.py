@@ -54,8 +54,6 @@ if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser(description='Clean single run.')
 	parser.add_argument('-i','--input_prefix', help='Input fastq file prefix without .fastq', required=True)
-	parser.add_argument('-o','--output', help='Output ok reads', required=True)
-	parser.add_argument('-b','--bad', help='Output bad reads', required=True)
 	parser.add_argument('-k','--ksize', help='Value of k', required=False, default=23)
 	parser.add_argument('-v','--verbose', help='Verbose', required=False, default=True)
 	parser.add_argument('-c','--cutoff', help='Cutoff', required=False, default=50)
@@ -63,9 +61,7 @@ if __name__ == '__main__':
 	
 	args = vars(parser.parse_args())
 	settings["prefix"] = args["input_prefix"] 
-	settings["output_file"] = args["output"]
 	settings["verbose"] = args["verbose"]
-	settings["output_bad_file"] = args["bad"]
 	settings["k"] = args["ksize"]
 	settings["cutoff"] = args["cutoff"]
 	settings["polyGcutoff"] = args["polyGcutoff"]
