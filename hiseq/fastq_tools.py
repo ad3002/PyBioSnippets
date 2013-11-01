@@ -133,7 +133,7 @@ def clean_pair_reads_data(fastq1_file, fastq2_file, fastq1ok_file, fastq2ok_file
 		error1 = None
 		error2 = None
 		if verbose:
-			print i, statistics["pe"]/float(i+1), statistics, "\r",
+			print i, round(100 * statistics["pe"]/float(i+1), 2), "% of good", statistics, "\r",
 		if cutoff:
 			if read1.length < cutoff:
 				error1 = cutoff_key
@@ -210,7 +210,7 @@ def clean_single_read_data(fastq1_file, fastq1ok_file, fastq_bad_file, verbose=F
 	for i, read1 in enumerate(fastq_reader(fastq1_file)):
 		error1 = None
 		if verbose:
-			print i, statistics["se"]/float(i+1), statistics, "\r",
+			print i, round(100 * statistics["se"]/float(i+1), 2), "% of good", statistics, "\r",
 		if cutoff:
 			if read1.length < cutoff:
 				error1 = cutoff_key
