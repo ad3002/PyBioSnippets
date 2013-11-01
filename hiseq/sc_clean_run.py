@@ -57,7 +57,7 @@ if __name__ == '__main__':
 	parser.add_argument('-o','--output', help='Output ok reads', required=True)
 	parser.add_argument('-b','--bad', help='Output bad reads', required=True)
 	parser.add_argument('-k','--ksize', help='Value of k', required=False, default=23)
-	parser.add_argument('-k','--verbose', help='Verbose', required=False, default=True)
+	parser.add_argument('-v','--verbose', help='Verbose', required=False, default=True)
 	parser.add_argument('-c','--cutoff', help='Cutoff', required=False, default=50)
 	parser.add_argument('-g','--polyGcutoff', help='PolyG/C length cutoff', required=False, default=13)
 	
