@@ -5,7 +5,7 @@
 #@author: Aleksey Komissarov
 #@contact: ad3002@gmail.com
 
-from trseeker.seqio.tab_file import sc_read_simple_tab_file
+from trseeker.seqio.tab_file import sc_iter_simple_tab_file
 from trseeker.tools.sequence_tools import get_revcomp
 import pymongo
 from pymongo import MongoClient
@@ -23,7 +23,7 @@ def kmer_to_repbase_with_mongo(kmer_file):
 	name_hash = {}
 
 	print "Iter over kmers"
-	for d in sc_read_simple_tab_file(kmer_file):
+	for d in sc_iter_simple_tab_file(kmer_file):
 		(kmer, tf) = d
 		kmer = kmer.lower()
 		print kmer, tf
