@@ -39,13 +39,18 @@ def check_adapters(settings):
 			print
 			print kmer, tf, library[kmer]
 			contaminated_kmers[kmer] = (tf, library[kmer])
+	all_kmers = set(contaminated_kmers.keys())
 	contaminated_kmers = contaminated_kmers.items()
 	contaminated_kmers.sort(key=lambda x: x[1], reverse=True)
 	print "Save data"
 	with open(settings["output_file"], "w") as fh:
 		for (k, v) in contaminated_kmers:
+			rkey = get_revcomp(k)
 			s = "%s\t%s\n" % (k, v)
 			fh.write(s)
+			if not rkey in all_kmers:
+				s = "%s\t%s\n" % (rkey, v)
+				fh.write(s)
 	return contaminated_kmers
 
 if __name__ == '__main__':
