@@ -15,7 +15,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Count')
 	parser.add_argument('-p','--prefix', help='Fastq file prefix', required=True)
 	parser.add_argument('-k','--ksize', help='K', required=False, default=23)
-	parser.add_argument('-m','--mintf', help='mintf', required=False, default=100)
+	parser.add_argument('-m','--mintf', help='mintf', required=False, default=0)
 	parser.add_argument('-d','--dumpmintf', help='dumpmintf', required=False, default=100)
 	args = vars(parser.parse_args())
 
