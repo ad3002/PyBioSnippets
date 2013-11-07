@@ -8,6 +8,7 @@
 from trseeker.seqio.sra_file import fastq_reader
 from trseeker.tools.sequence_tools import get_revcomp
 
+
 def fix_uncorrect_long_quality(fastq_file, corrected_fastq_output):
 	''' Fix too long quality scores in corrupted HiSeq files.
 
@@ -24,6 +25,7 @@ def fix_uncorrect_long_quality(fastq_file, corrected_fastq_output):
 				print
 				print read.fastq
 			fh.write(read.fastq)
+
 
 def is_bad_read(read, adapters, polyG_cutoff):
 	''' Check read quality.
@@ -50,11 +52,6 @@ def is_bad_read(read, adapters, polyG_cutoff):
 			return "adapters"
 	return None
 
-def compute_kmer_index(fastq1_file, fastq2_file):
-	'''
-	'''
-	index = {}
-	pass
 
 def iter_pe_data(fastq1_file, fastq2_file):
 	''' Iterate over PE fastq files.
