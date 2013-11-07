@@ -9,7 +9,10 @@ from trseeker.seqio.sra_file import fastq_reader
 from trseeker.tools.sequence_tools import get_revcomp
 
 def fix_uncorrect_long_quality(fastq_file, corrected_fastq_output):
-	''' Fix too long quality scores in corrupted HiSeq files
+	''' Fix too long quality scores in corrupted HiSeq files.
+
+	@param fastq_file: fastq_file
+	@param corrected_fastq_output: corrected fastq output
 	'''
 	bp200 = 0
 	total = 0.
