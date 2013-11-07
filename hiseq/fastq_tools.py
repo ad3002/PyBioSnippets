@@ -32,6 +32,10 @@ def is_bad_read(read, adapters, polyG_cutoff):
 	3. Presence of polyC tracks.
 	4. Presence of polyG tracks.
 	5. Presence of adapter fragments.
+
+	@param read: read object
+	@param adapters: list of kmers
+	@param polyG_cutoff: minimal length of polyC track
 	'''
 	if "n" in read.sequence:
 		return "N"
