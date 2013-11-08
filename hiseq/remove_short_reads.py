@@ -4,7 +4,9 @@
 #@created: 10.10.2013
 #@author: Aleksey Komissarov
 #@contact: ad3002@gmail.com
-
+'''
+Remove short reads from fastq file.
+'''
 import sys
 from PyBioSnippets.hiseq.fastq_tools import clean_short_reads
 import argparse
