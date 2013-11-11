@@ -19,6 +19,9 @@ from PyExp import sc_iter_filepath_folder
 
 def pacbio_raw_to_fastq_and_fasta(file_name, phred=33):
     ''' Convert pacbio bax.h5 files to fasta and fastq files.
+
+    @params file_name: prefix for processed file
+    @param phred: phred offset (default 33)
     '''
     fastq_file = file_name+".fastq"
     fasta_file = file_name+".fasta"
