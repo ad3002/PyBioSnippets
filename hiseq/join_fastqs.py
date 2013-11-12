@@ -15,7 +15,11 @@ from collections import defaultdict
 import argparse
 
 def join_hiseq_files(folder, mask, remove=False):
-	'''
+	''' Join several HiSeq files.
+
+	@param folder: folder with hiseq files
+	@param mask: file mask for joining
+	@param remove: remove files after joining
 	'''
 	join_groups = defaultdict(list)
 	for root, dirs, files in os.walk(folder, topdown=False):
