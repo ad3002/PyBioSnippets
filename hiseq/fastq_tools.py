@@ -295,11 +295,12 @@ def split_large_fastq_file(file_name, output_file_pattern, cutoff=1000000):
 		print "\nLast one. Save reads", i, "for chunk", chunk
 		write_data(reads, chunk, output_file_pattern)
 
-def fastq_to_fasta(fastq_file, fasta_file):
+def fastq_to_fasta(fastq_file, fasta_file, verbose=False):
 	''' Fastq to fasta.
 	'''
 	print "Fastq to fasta..."
 	with open(fasta_file, "w") as fh:
 		for i, read in enumerate(fastq_reader(fastq_file)):
-			print i, "\r",
+			if verbose:
+				print i, "\r",
 			fh.write(read.fasta)
