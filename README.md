@@ -48,6 +48,13 @@ Compute fragment lengths statistics for first l lines.
 python fragments_length_from_sam.py -o stat.png -i data.sam -l 100000
 ```
 
+Count FLAG values for given SAM file:
+
+```bash
+python hiseq/sam_stats.py -i data.sam
+```
+
+
 ## Fastq operations
 
 Join splitted HiSeq files:
