@@ -5,7 +5,7 @@
 #@author: Aleksey Komissarov
 #@contact: ad3002@gmail.com
 
-import sys
+import sys, os
 from trseeker.tools.jellyfish import sc_count_and_dump_kmers_for_file
 from PyBioSnippets.hiseq.fastq_tools import fastq_to_fasta
 import argparse
@@ -29,6 +29,7 @@ if __name__ == '__main__':
 	jf_db = prefix + ".%s.jf" % k
 	jf_dat  = prefix + ".%s.dat" % k
 
-	fastq_to_fasta(fastq_file, fasta_file)
+	if os.path.isfile(fastq_file) and not os.path.isfile(fasta_file):
+		fastq_to_fasta(fastq_file, fasta_file)
 
 	sc_count_and_dump_kmers_for_file(fasta_file, ".", jf_db, jf_dat, k, mintf, dumpmintf)
