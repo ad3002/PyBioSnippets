@@ -25,7 +25,7 @@ def count_unmapped(sam_file):
 	return (mapped, unmapped)
 	
 def save_unmapped_to_fasta(sam_file, fasta_file):
-	''' Save unmapped reads to file.
+	''' Save unmapped reads to fasta file.
 	'''
 	print "Read data"
 	with open(sam_file) as fh:
