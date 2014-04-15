@@ -11,9 +11,10 @@ import argparse
 
 if __name__ == '__main__':
 	
-	parser = argparse.ArgumentParser(description='Check presence of adapter kmers.')
+	parser = argparse.ArgumentParser(description='Convert fastq tp fasta.')
 	parser.add_argument('-i','--input', help='Fastq file', required=True)
 	parser.add_argument('-o','--output', help='Fasta output file', required=True)
 	args = vars(parser.parse_args())
+
 	fastq_to_fasta(args["input"], args["output"])
 	
